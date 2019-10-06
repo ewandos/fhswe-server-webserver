@@ -1,14 +1,13 @@
 package BIF.SWE1;
 
-import BIF.SWE1.interfaces.Url;
-
 public class UEB1 {
 
-	public Url getUrl(String path) {
-		//TODO: Implement URL Interface
-		return null;
+	public WebUrl getUrl(String path) {
+		WebUrl url = new WebUrl(path);
+		return url;
 	}
 
 	public void helloWorld() {
+	    System.out.println("Hello World");
 	}
 }
