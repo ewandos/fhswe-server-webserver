@@ -12,8 +12,8 @@ public class UEB2 {
 
 	}
 
-	public Url getUrl(String s) {
-		return null;
+	public Url getUrl(String path) {
+		return new WebUrl(path);
 	}
 
 	public Request getRequest(InputStream inputStream) {

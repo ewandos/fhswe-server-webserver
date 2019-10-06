@@ -1,10 +1,11 @@
 package BIF.SWE1;
 
+import BIF.SWE1.interfaces.Url;
+
 public class UEB1 {
 
-	public WebUrl getUrl(String path) {
-		WebUrl url = new WebUrl(path);
-		return url;
+	public Url getUrl(String path) {
+		return new WebUrl(path);
 	}
 
 	public void helloWorld() {

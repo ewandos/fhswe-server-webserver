@@ -8,36 +8,21 @@ import java.util.Map;
 public class WebUrl implements Url{
     private String rawUrl;
     private String path;
+    private String fragment;
     private int numOfParameters = 0;
+
+    // Collections
     private Map<String, String> parametersMap = new HashMap<String, String>();
+    private String[] segments;
+
+    // Flags for Caching
+    private boolean pathGathered = false;
+    private boolean parametersGathered = false;
+    private boolean fragmentsGathered = false;
+    private boolean segmentsGathered = false;
 
     public WebUrl(String rawUrl) {
-        if (rawUrl != null) {
-            this.rawUrl = rawUrl;
-
-            // if url contains parameters
-            if (rawUrl.contains("?")) {
-                this.path = rawUrl.substring(0, rawUrl.indexOf('?'));
-                String rawParameters = rawUrl.substring(rawUrl.indexOf('?') + 1);
-                gatherParameters(rawParameters);
-            } else {
-                this.path = rawUrl;
-            }
-        }
-    }
-
-    private void gatherParameters(String rawParameters) {
-        // split rawParameters to segments
-        String[] parameterSegments = rawParameters.split("&");
-        numOfParameters = parameterSegments.length;
-
-        // split segments to key and value
-        for (String segment: parameterSegments) {
-            String[] segmentVars = segment.split("=");
-            // put key and value into a HashMap
-            if (segmentVars.length == 2)
-                this.parametersMap.put(segmentVars[0], segmentVars[1]);
-        }
+        this.rawUrl = rawUrl;
     }
 
     @Override
@@ -47,22 +32,59 @@ public class WebUrl implements Url{
 
     @Override
     public String getPath() {
+        if (rawUrl != null && !pathGathered) {
+            path = rawUrl;
+
+            // deleting HTTP Operators
+            if (rawUrl.contains("?"))
+                path = rawUrl.substring(0, rawUrl.indexOf('?'));
+            if (rawUrl.contains("#"))
+                path = rawUrl.substring(0, rawUrl.indexOf('#'));
+        }
+
+        pathGathered = true;
         return path;
     }
 
     @Override
     public Map<String, String> getParameter() {
+        if (rawUrl != null && !parametersGathered && rawUrl.contains("?")) {
+            String rawParameters = rawUrl.substring(rawUrl.indexOf('?') + 1);
+
+            // split rawParameters to parameterSegments
+            String[] parameterSegments = rawParameters.split("&");
+            numOfParameters = parameterSegments.length;
+
+            // split parameterSegments to key and value
+            for (String segment: parameterSegments) {
+                String[] segmentVars = segment.split("=");
+                // put key and value into a HashMap
+                if (segmentVars.length == 2)
+                    parametersMap.put(segmentVars[0], segmentVars[1]);
+            }
+        }
+
+        parametersGathered = true;
         return parametersMap;
     }
 
     @Override
     public int getParameterCount() {
+        if (!parametersGathered)
+            getParameter();
         return numOfParameters;
     }
 
     @Override
     public String[] getSegments() {
-        return new String[0];
+        if (rawUrl != null && !segmentsGathered) {
+            // trim the first '/'
+            String rawSegments = rawUrl.substring(1);
+            segments = rawSegments.split("/");
+        }
+
+        segmentsGathered = true;
+        return segments;
     }
 
     @Override
@@ -77,6 +99,14 @@ public class WebUrl implements Url{
 
     @Override
     public String getFragment() {
-        return null;
+        if (rawUrl != null && !fragmentsGathered && rawUrl.contains("#")) {
+            if (rawUrl.contains("?"))
+                fragment = rawUrl.substring(rawUrl.indexOf("#") + 1, rawUrl.indexOf("?"));
+            else
+                fragment = rawUrl.substring(rawUrl.indexOf("#") + 1);
+        }
+
+        fragmentsGathered = true;
+        return fragment;
     }
 }
