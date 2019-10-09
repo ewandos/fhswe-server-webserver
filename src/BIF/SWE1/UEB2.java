@@ -17,7 +17,7 @@ public class UEB2 {
 	}
 
 	public Request getRequest(InputStream inputStream) {
-		return null;
+		return new WebRequest(inputStream);
 	}
 
 	public Response getResponse() {
