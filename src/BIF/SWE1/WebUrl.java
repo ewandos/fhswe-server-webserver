@@ -5,6 +5,9 @@ import BIF.SWE1.interfaces.Url;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * WebUrl takes a raw URL as a string and gather every segment like the path or parameters.
+ */
 public class WebUrl implements Url{
     private String rawUrl;
     private String path;
@@ -21,6 +24,9 @@ public class WebUrl implements Url{
     private boolean fragmentsGathered = false;
     private boolean segmentsGathered = false;
 
+    /**
+     * @param rawUrl The raw URL as a String.
+     */
     public WebUrl(String rawUrl) {
         this.rawUrl = rawUrl;
     }
@@ -68,6 +74,9 @@ public class WebUrl implements Url{
         return parametersMap;
     }
 
+    /**
+     * @return Returns the number of parameter of the url. Returns 0 if there are no parameter.
+     */
     @Override
     public int getParameterCount() {
         if (!parametersGathered)
