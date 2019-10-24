@@ -1,6 +1,5 @@
 package BIF.SWE1;
 
-import java.io.*;
 import java.net.Socket;
 
 /**
@@ -22,19 +21,16 @@ public class Session implements Runnable{
     @Override
     public void run() {
         try{
-            httpRequest request = new httpRequest(clientSocket.getInputStream());
+            HttpRequest request = new HttpRequest(clientSocket.getInputStream());
             request.isValid();
 
-            // Sending a Response
-            OutputStream os = clientSocket.getOutputStream();
-            OutputStreamWriter osw = new OutputStreamWriter(os);
-            BufferedWriter bw = new BufferedWriter(osw);
-            // String httpResponse = "HTTP/1.1 200 OK\r\nContent-Length: 8\r\nContent-Type: text/plain\r\n\r\n" + "Response";
-            String httpResponse = "HTTP/1.1 200 OK\r\n\r\n" + "<!DOCTYPE html>\n<html>\n<head>\n<title>SWE Webserver</title>\n" +
-                    "</head>\n<body>\n\n<h1>Software Engineering</h1>\n<p>Krass konkrete Website!</p>\n\n" +
-                    "</body>\n</html>";
-            bw.write(httpResponse);
-            bw.flush();
+            String mainPage = "<!DOCTYPE html>\n<html>\n<head>\n<title>SWE Webserver</title>\n\n</head>\n<body>\n\n<h1>Software Engineering</h1>\n<p>Krass konkrete Website!</p>";
+            HttpResponse response = new HttpResponse();
+            response.setStatusCode(200);
+            response.setContentType("text/html");
+            response.setContent(mainPage);
+            response.setServerHeader("EwiServer");
+            response.send(clientSocket.getOutputStream());
             clientSocket.close();
         } catch(Exception e) {
             System.out.println(e.getMessage());
@@ -54,3 +50,14 @@ public class Session implements Runnable{
                 System.out.println(line);
             }
  */
+
+/*
+            OutputStream os = clientSocket.getOutputStream();
+            OutputStreamWriter osw = new OutputStreamWriter(os);
+            BufferedWriter bw = new BufferedWriter(osw);
+            String httpResponse = "HTTP/1.1 200 OK\r\n\r\n" + "<!DOCTYPE html>\n<html>\n<head>\n<title>SWE Webserver</title>\n" +
+                    "</head>\n<body>\n\n<h1>Software Engineering</h1>\n<p>Krass konkrete Website!</p>\n\n" +
+                    "</body>\n</html>";
+            bw.write(httpResponse);
+            bw.flush();
+            */

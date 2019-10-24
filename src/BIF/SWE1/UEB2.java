@@ -17,10 +17,10 @@ public class UEB2 {
 	}
 
 	public Request getRequest(InputStream inputStream) {
-		return new httpRequest(inputStream);
+		return new HttpRequest(inputStream);
 	}
 
 	public Response getResponse() {
-		return new httpResponse();
+		return new HttpResponse();
 	}
 }

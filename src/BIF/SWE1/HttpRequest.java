@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 /**
  * httpRequest takes an InputStream containing a HTTP Request validates it by RegExp and gathers all segments
  */
-public class httpRequest implements Request {
+public class HttpRequest implements Request {
     private InputStreamReader stream;
     private String method;
     private Url url;
@@ -21,7 +21,7 @@ public class httpRequest implements Request {
     private final String pattern = "^(GET|POST|get|post)\\s/((http(s)?://)?(www\\.)?[a-zA-Z0-9]+\\.[a-z]+\\??([a-zA-Z0-9]+=[a-zA-Z0-9]+&?)*)?\\sHTTP/(1\\.0|1\\.1|2)$";
     private final Pattern REGEXP = Pattern.compile(pattern, Pattern.MULTILINE);
 
-    public httpRequest(InputStream stream) {
+    public HttpRequest(InputStream stream) {
         this.stream = new InputStreamReader(stream);
     }
 

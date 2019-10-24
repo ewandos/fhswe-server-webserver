@@ -7,13 +7,14 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class httpResponse implements Response {
+public class HttpResponse implements Response {
     private int statusCode;
     private Map<String, String> headers = new HashMap<String, String>();
-    private StringBuilder content;
+    private StringBuilder content = new StringBuilder();
     private String contentType;
+    private String serverHeader;
 
-    public httpResponse() {
+    public HttpResponse() {
 
     }
 
@@ -68,12 +69,17 @@ public class httpResponse implements Response {
 
     @Override
     public String getServerHeader() {
-        return null;
+        return serverHeader;
     }
 
     @Override
     public void setServerHeader(String server) {
-
+        StringBuilder builder = new StringBuilder();
+        builder.append("HTTP/1.1 ").append(getStatus()).append("\r\n");
+        builder.append("Server: ").append(server).append("\r\n");
+        builder.append("Content-Length: ").append(getContentLength()).append("\r\n");
+        builder.append("Content-Type: ").append(getContentType()).append("\r\n\r\n");
+        serverHeader = builder.toString();
     }
 
     @Override
@@ -97,7 +103,6 @@ public class httpResponse implements Response {
         } catch(Exception e) {
             System.out.println(e.getMessage());
         }
-
     }
 
     @Override
@@ -105,7 +110,8 @@ public class httpResponse implements Response {
         try {
             OutputStreamWriter osw = new OutputStreamWriter(network);
             BufferedWriter bw = new BufferedWriter(osw);
-            bw.write(content.toString());
+            String httpResponse = serverHeader + content.toString();
+            bw.write(httpResponse);
             bw.flush();
         } catch(Exception e) {
             System.out.println(e.getMessage());
