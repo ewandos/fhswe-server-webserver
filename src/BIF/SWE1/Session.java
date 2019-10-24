@@ -33,6 +33,14 @@ public class Session implements Runnable{
                 System.out.println(line);
             }
 
+            /*
+            httpRequest request = new httpRequest(clientSocket.getInputStream());
+            request.isValid();
+
+            Is not possible, cause the clientSocket is closed when the request-object closes the bufferedReader
+            https://stackoverflow.com/questions/15769035/java-net-socketexception-socket-closed-tcp-client-server-communication
+             */
+
             // Sending a Response
             OutputStream os = clientSocket.getOutputStream();
             OutputStreamWriter osw = new OutputStreamWriter(os);

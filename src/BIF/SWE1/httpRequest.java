@@ -10,15 +10,18 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class WebRequest implements Request {
+/**
+ * httpRequest takes an InputStream containing a HTTP Request validates it by RegExp and gathers all segments
+ */
+public class httpRequest implements Request {
     private InputStreamReader stream;
     private String method;
     private Url url;
 
-    private final String pattern = "^(GET|POST)\\s\\/((http(s)?:\\/\\/)?(www\\.)?[a-zA-Z0-9]+\\.[a-z]+)?\\sHTTP\\/(1\\.0|1\\.1|2)$";
+    private final String pattern = "^(GET|POST|get|post)\\s/((http(s)?://)?(www\\.)?[a-zA-Z0-9]+\\.[a-z]+\\??([a-zA-Z0-9]+=[a-zA-Z0-9]+&?)*)?\\sHTTP/(1\\.0|1\\.1|2)$";
     private final Pattern REGEXP = Pattern.compile(pattern, Pattern.MULTILINE);
 
-    public WebRequest(InputStream stream) {
+    public httpRequest(InputStream stream) {
         this.stream = new InputStreamReader(stream);
     }
 
@@ -26,15 +29,15 @@ public class WebRequest implements Request {
     public boolean isValid() {
         // validate by RegExp
         if (url == null && method == null) {
-
             try (BufferedReader reader = new BufferedReader(stream)) {
                 String line = reader.readLine();
-                Matcher m = REGEXP.matcher(line);
-                System.out.println(line);
+                Matcher regexp = REGEXP.matcher(line);
 
-                if (m.matches()) {
-                    method = line.trim().substring(0, line.indexOf("/"));
-                    url = new WebUrl(line.trim().substring(line.indexOf("/") + 1, line.lastIndexOf(" ")));
+                // save method and url
+                if (regexp.matches()) {
+                    method = line.trim().substring(0, line.indexOf("/")).toUpperCase();
+                    url = new WebUrl(line.trim().substring(line.indexOf("/"), line.lastIndexOf(" ")));
+                    reader.close();
                     return true;
                 } else {
                     throw new Exception("RegExp doesn't match!");

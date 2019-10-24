@@ -7,6 +7,8 @@
 26.09 - 100 min - Java lernen <br>
 30.09. - 45 min - Unit Tests untersuchen & Planung <br>
 03.10. - 90 min - UEB1-Tests <br>
-06.10. - 120 min - UEB1-Tests & UEB2-Tests
-09.10. - 120 min - Request Implementation & UEB2-Tests
-17.10. - 180 min - Implementation of Server Loop
+06.10. - 120 min - UEB1-Tests & UEB2-Tests<br>
+09.10. - 120 min - Request Implementation & UEB2-Tests<br>
+17.10. - 180 min - Implementation of Server Loop<br>
+23.10. - 45min - Multithreading and Javadoc Comments<br>
+24.10. - 100min - Implementation of Request & Response
