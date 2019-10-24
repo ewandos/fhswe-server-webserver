@@ -22,7 +22,28 @@ public class Session implements Runnable{
     @Override
     public void run() {
         try{
-            // Receiving the HTTP Request
+            httpRequest request = new httpRequest(clientSocket.getInputStream());
+            request.isValid();
+
+            // Sending a Response
+            OutputStream os = clientSocket.getOutputStream();
+            OutputStreamWriter osw = new OutputStreamWriter(os);
+            BufferedWriter bw = new BufferedWriter(osw);
+            // String httpResponse = "HTTP/1.1 200 OK\r\nContent-Length: 8\r\nContent-Type: text/plain\r\n\r\n" + "Response";
+            String httpResponse = "HTTP/1.1 200 OK\r\n\r\n" + "<!DOCTYPE html>\n<html>\n<head>\n<title>SWE Webserver</title>\n" +
+                    "</head>\n<body>\n\n<h1>Software Engineering</h1>\n<p>Krass konkrete Website!</p>\n\n" +
+                    "</body>\n</html>";
+            bw.write(httpResponse);
+            bw.flush();
+            clientSocket.close();
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+}
+
+/*
+// Receiving the HTTP Request
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             String line;
 
@@ -32,26 +53,4 @@ public class Session implements Runnable{
                     break;
                 System.out.println(line);
             }
-
-            /*
-            httpRequest request = new httpRequest(clientSocket.getInputStream());
-            request.isValid();
-
-            Is not possible, cause the clientSocket is closed when the request-object closes the bufferedReader
-            https://stackoverflow.com/questions/15769035/java-net-socketexception-socket-closed-tcp-client-server-communication
-             */
-
-            // Sending a Response
-            OutputStream os = clientSocket.getOutputStream();
-            OutputStreamWriter osw = new OutputStreamWriter(os);
-            BufferedWriter bw = new BufferedWriter(osw);
-            // String httpResponse = "HTTP/1.1 200 OK\r\nContent-Length: 8\r\nContent-Type: text/plain\r\n\r\n" + "Response";
-            String httpResponse = "HTTP/1.1 200 OK\r\n\r\n" + "<h1>Response</h1>";
-            bw.write(httpResponse);
-            bw.flush();
-            clientSocket.close();
-        } catch(Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
-}
+ */

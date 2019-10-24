@@ -2,14 +2,16 @@ package BIF.SWE1;
 
 import BIF.SWE1.interfaces.Response;
 
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 public class httpResponse implements Response {
     private int statusCode;
     private Map<String, String> headers = new HashMap<String, String>();
+    private StringBuilder content;
+    private String contentType;
 
     public httpResponse() {
 
@@ -22,17 +24,17 @@ public class httpResponse implements Response {
 
     @Override
     public int getContentLength() {
-        return 0;
+        return content.length();
     }
 
     @Override
     public String getContentType() {
-        return null;
+        return contentType;
     }
 
     @Override
     public void setContentType(String contentType) {
-
+        this.contentType = contentType;
     }
 
     @Override
@@ -76,21 +78,37 @@ public class httpResponse implements Response {
 
     @Override
     public void setContent(String content) {
-
+        this.content.append(content);
     }
 
     @Override
     public void setContent(byte[] content) {
-
+        this.content.append(Arrays.toString(content));
     }
 
     @Override
     public void setContent(InputStream stream) {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+        String line;
+        try {
+            while((line = reader.readLine()) != null) {
+                content.append(line);
+            }
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+        }
 
     }
 
     @Override
     public void send(OutputStream network) {
-
+        try {
+            OutputStreamWriter osw = new OutputStreamWriter(network);
+            BufferedWriter bw = new BufferedWriter(osw);
+            bw.write(content.toString());
+            bw.flush();
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

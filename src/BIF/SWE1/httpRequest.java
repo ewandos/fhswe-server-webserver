@@ -29,7 +29,8 @@ public class httpRequest implements Request {
     public boolean isValid() {
         // validate by RegExp
         if (url == null && method == null) {
-            try (BufferedReader reader = new BufferedReader(stream)) {
+            try {
+                BufferedReader reader = new BufferedReader(stream);
                 String line = reader.readLine();
                 Matcher regexp = REGEXP.matcher(line);
 
@@ -37,12 +38,11 @@ public class httpRequest implements Request {
                 if (regexp.matches()) {
                     method = line.trim().substring(0, line.indexOf("/")).toUpperCase();
                     url = new WebUrl(line.trim().substring(line.indexOf("/"), line.lastIndexOf(" ")));
-                    reader.close();
+                    System.out.println("Received a valid request!");
                     return true;
                 } else {
                     throw new Exception("RegExp doesn't match!");
                 }
-
             } catch (Exception e) {
                 System.out.println(e.getMessage());
                 return false;

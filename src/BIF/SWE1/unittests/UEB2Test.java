@@ -145,7 +145,7 @@ public class UEB2Test extends AbstractTestFixture<UEB2> {
 	}
 
 	@SuppressWarnings("unused")
-	/*
+
 	@Test
 	public void response_should_throw_error_when_no_statuscode_was_set() throws Exception {
 		Response obj = createInstance().getResponse();
@@ -155,7 +155,7 @@ public class UEB2Test extends AbstractTestFixture<UEB2> {
 		// test is successful if method trows exception, but won't compile if it does
 		assertThrows(() -> { int tmp = obj.getStatusCode(); });
 	}
-	*/
+
 
 	@Test
 	public void response_should_save_statuscode() throws Exception {
