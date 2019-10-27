@@ -28,6 +28,12 @@ public class HttpRequest implements Request {
         this.stream = new InputStreamReader(stream);
     }
 
+    /**
+     * Takes the first line of a HttpRequest and validates it, by parsing the method and url
+     * @param line first line of a HttpRequest
+     * @return true/false if request-line is valid or not
+     * @throws Exception if there is an error at parsing the line
+     */
     private boolean parseRequestLine(String line) throws Exception{
         Matcher regexp = REGEXP.matcher(line);
 
@@ -41,10 +47,15 @@ public class HttpRequest implements Request {
         return true;
     }
 
-    private void parseHeaders(BufferedReader reader) throws Exception{
+    /**
+     * Parses all headers of a HttpRequest to a HashedMap
+     * @param reader takes a BufferedReader to get all lines
+     * @throws Exception if there is an error at parsing the Headers to a HashMap
+     */
+    private void parseHeaders(BufferedReader reader) throws Exception {
         String line = reader.readLine();
         while(line.length() != 0) {
-            String key = line.substring(0, line.indexOf(":")).trim();
+            String key = line.substring(0, line.indexOf(":")).trim().toLowerCase();
             String value = line.substring(line.indexOf(":") + 2).trim();
             headers.put(key, value);
             line = reader.readLine();
@@ -68,7 +79,7 @@ public class HttpRequest implements Request {
                 System.out.println(e.getMessage());
             }
         }
-        return false;
+        return true;
     }
 
     @Override
@@ -93,7 +104,10 @@ public class HttpRequest implements Request {
 
     @Override
     public String getUserAgent() {
-        return null;
+        if (isValid())
+            return headers.getOrDefault("user-agent", null);
+        else
+            return null;
     }
 
     @Override
