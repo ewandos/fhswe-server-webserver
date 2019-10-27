@@ -25,11 +25,7 @@ public class Session implements Runnable{
             request.isValid();
 
             String mainPage = "<!DOCTYPE html>\n<html>\n<head>\n<title>SWE Webserver</title>\n\n</head>\n<body>\n\n<h1>Software Engineering</h1>\n<p>Krass konkrete Website!</p>";
-            HttpResponse response = new HttpResponse();
-            response.setStatusCode(200);
-            response.setContentType("text/html");
-            response.setContent(mainPage);
-            response.setServerHeader("EwiServer");
+            HttpResponse response = HttpResponseFactory.create(200, "EwiServer", "text/html", mainPage);
             response.send(clientSocket.getOutputStream());
             clientSocket.close();
         } catch(Exception e) {
@@ -37,27 +33,3 @@ public class Session implements Runnable{
         }
     }
 }
-
-/*
-// Receiving the HTTP Request
-            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            String line;
-
-            // Read Lines until empty (bufferedReader is never null)
-            while((line = in.readLine()) != null ) {
-                if (line.equalsIgnoreCase( ""))
-                    break;
-                System.out.println(line);
-            }
- */
-
-/*
-            OutputStream os = clientSocket.getOutputStream();
-            OutputStreamWriter osw = new OutputStreamWriter(os);
-            BufferedWriter bw = new BufferedWriter(osw);
-            String httpResponse = "HTTP/1.1 200 OK\r\n\r\n" + "<!DOCTYPE html>\n<html>\n<head>\n<title>SWE Webserver</title>\n" +
-                    "</head>\n<body>\n\n<h1>Software Engineering</h1>\n<p>Krass konkrete Website!</p>\n\n" +
-                    "</body>\n</html>";
-            bw.write(httpResponse);
-            bw.flush();
-            */

@@ -6,6 +6,7 @@ import BIF.SWE1.interfaces.Url;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,6 +18,8 @@ public class HttpRequest implements Request {
     private InputStreamReader stream;
     private String method;
     private Url url;
+    private Map<String, String> headers = new HashMap<String, String>();
+    private int headersCount;
 
     private final String pattern = "^(GET|POST|get|post)\\s/((http(s)?://)?(www\\.)?[a-zA-Z0-9]+\\.[a-z]+\\??([a-zA-Z0-9]+=[a-zA-Z0-9]+&?)*)?\\sHTTP/(1\\.0|1\\.1|2)$";
     private final Pattern REGEXP = Pattern.compile(pattern, Pattern.MULTILINE);
@@ -27,6 +30,7 @@ public class HttpRequest implements Request {
 
     @Override
     public boolean isValid() {
+        // TODO: Very, very long method... maybe refactor to multiple methods.
         // validate by RegExp
         if (url == null && method == null) {
             try {
@@ -39,10 +43,20 @@ public class HttpRequest implements Request {
                     method = line.trim().substring(0, line.indexOf("/")).toUpperCase();
                     url = new WebUrl(line.trim().substring(line.indexOf("/"), line.lastIndexOf(" ")));
                     System.out.println("Received a valid request!");
-                    return true;
                 } else {
                     throw new Exception("RegExp doesn't match!");
                 }
+
+                // Gather all the headers
+                line = reader.readLine();
+                while(line.length() != 0) {
+                    String key = line.substring(0, line.indexOf(":")).trim();
+                    String value = line.substring(line.indexOf(":") + 2).trim();
+                    headers.put(key, value);
+                    line = reader.readLine();
+                    headersCount++;
+                }
+                return true;
             } catch (Exception e) {
                 System.out.println(e.getMessage());
                 return false;
@@ -63,12 +77,12 @@ public class HttpRequest implements Request {
 
     @Override
     public Map<String, String> getHeaders() {
-        return null;
+        return headers;
     }
 
     @Override
     public int getHeaderCount() {
-        return 0;
+        return headersCount;
     }
 
     @Override
