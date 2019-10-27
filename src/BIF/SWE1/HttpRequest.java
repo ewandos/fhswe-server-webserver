@@ -28,38 +28,44 @@ public class HttpRequest implements Request {
         this.stream = new InputStreamReader(stream);
     }
 
+    private boolean parseRequestLine(String line) throws Exception{
+        Matcher regexp = REGEXP.matcher(line);
+
+        if (regexp.matches()) {
+            method = line.trim().substring(0, line.indexOf("/")).toUpperCase();
+            url = new WebUrl(line.trim().substring(line.indexOf("/"), line.lastIndexOf(" ")));
+            System.out.println("Received a valid request!");
+        } else {
+            throw new Exception("RegExp doesn't match!");
+        }
+        return true;
+    }
+
+    private void parseHeaders(BufferedReader reader) throws Exception{
+        String line = reader.readLine();
+        while(line.length() != 0) {
+            String key = line.substring(0, line.indexOf(":")).trim();
+            String value = line.substring(line.indexOf(":") + 2).trim();
+            headers.put(key, value);
+            line = reader.readLine();
+            headersCount++;
+        }
+    }
+
     @Override
     public boolean isValid() {
-        // TODO: Very, very long method... maybe refactor to multiple methods.
-        // validate by RegExp
         if (url == null && method == null) {
             try {
                 BufferedReader reader = new BufferedReader(stream);
                 String line = reader.readLine();
-                Matcher regexp = REGEXP.matcher(line);
 
-                // save method and url
-                if (regexp.matches()) {
-                    method = line.trim().substring(0, line.indexOf("/")).toUpperCase();
-                    url = new WebUrl(line.trim().substring(line.indexOf("/"), line.lastIndexOf(" ")));
-                    System.out.println("Received a valid request!");
-                } else {
-                    throw new Exception("RegExp doesn't match!");
-                }
+                if (!parseRequestLine(line))
+                    return false;
 
-                // Gather all the headers
-                line = reader.readLine();
-                while(line.length() != 0) {
-                    String key = line.substring(0, line.indexOf(":")).trim();
-                    String value = line.substring(line.indexOf(":") + 2).trim();
-                    headers.put(key, value);
-                    line = reader.readLine();
-                    headersCount++;
-                }
+                parseHeaders(reader);
                 return true;
             } catch (Exception e) {
                 System.out.println(e.getMessage());
-                return false;
             }
         }
         return false;
