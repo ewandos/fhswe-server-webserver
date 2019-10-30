@@ -26,7 +26,7 @@ public class WebPlugin implements Plugin {
 
     @Override
     public Response handle(Request req) {
-        String mainPage = "<!DOCTYPE html>\n<html>\n<head>\n<title>SWE Webserver</title>\n\n</head>\n<body>\n\n<h1>Software Engineering</h1>\n<p>Krass konkrete Website!</p>";
-        return HttpResponseFactory.create(200, "EwiServer", "text/plain", mainPage);
+        String mainPage = "<!DOCTYPE html>\n<html>\n<head>\n<title>SWE Webserver</title>\n\n</head>\n<body>\n\n<h1>Web Plugin Access</h1>\n<p>Das Web-Plugin wurde erfolgreich angesprochen!</p>";
+        return HttpResponseFactory.create(200, "EwiServer", "text/html", mainPage);
     }
 }
