@@ -21,7 +21,7 @@ public class HttpRequest implements Request {
     private Map<String, String> headers = new HashMap<String, String>();
     private int headersCount;
 
-    private final String pattern = "^(GET|POST|get|post)\\s/((http(s)?://)?(www\\.)?[a-zA-Z0-9]+\\.[a-z]+\\??([a-zA-Z0-9]+=[a-zA-Z0-9]+&?)*)?\\sHTTP/(1\\.0|1\\.1|2)$";
+    private final String pattern = "^(GET|POST|get|post)\\s/((http(s)?://)?(www\\.)?/?[a-zA-Z0-9/]+\\.[a-z]+\\??([a-zA-Z0-9/_]+=[a-zA-Z0-9]+&?)*)?\\sHTTP/(1\\.0|1\\.1|2)$";
     private final Pattern REGEXP = Pattern.compile(pattern, Pattern.MULTILINE);
 
     public HttpRequest(InputStream stream) {
@@ -77,6 +77,7 @@ public class HttpRequest implements Request {
                 return true;
             } catch (Exception e) {
                 System.out.println(e.getMessage());
+                return false;
             }
         }
         return true;
@@ -89,6 +90,7 @@ public class HttpRequest implements Request {
 
     @Override
     public Url getUrl() {
+        isValid();
         return url;
     }
 
@@ -104,10 +106,8 @@ public class HttpRequest implements Request {
 
     @Override
     public String getUserAgent() {
-        if (isValid())
-            return headers.getOrDefault("user-agent", null);
-        else
-            return null;
+        isValid();
+        return headers.getOrDefault("user-agent", null);
     }
 
     @Override

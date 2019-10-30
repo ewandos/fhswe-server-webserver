@@ -144,8 +144,6 @@ public class UEB2Test extends AbstractTestFixture<UEB2> {
 		assertNotNull("UEB2.GetResponse returned null", obj);
 	}
 
-	@SuppressWarnings("unused")
-
 	@Test
 	public void response_should_throw_error_when_no_statuscode_was_set() throws Exception {
 		Response obj = createInstance().getResponse();

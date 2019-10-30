@@ -5,7 +5,6 @@ import java.io.InputStream;
 import BIF.SWE1.interfaces.Plugin;
 import BIF.SWE1.interfaces.Request;
 import BIF.SWE1.interfaces.Response;
-import BIF.SWE1.unittests.mocks.Ueb5TestPlugin;
 
 public class UEB3 {
 
@@ -22,6 +21,6 @@ public class UEB3 {
 	}
 
 	public Plugin getTestPlugin() {
-		return new Ueb5TestPlugin();
+		return new WebPlugin();
 	}
 }

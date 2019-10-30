@@ -11,4 +11,5 @@
 09.10. - 120 min - Request Implementation & UEB2-Tests<br>
 17.10. - 180 min - Implementation of Server Loop<br>
 23.10. - 45min - Multithreading and Javadoc Comments<br>
-24.10. - 100min - Implementation of Request & Response
+24.10. - 100min - Implementation of Request & Response<br>
+27.10. - 120min - Implementation of Request & Response<br>

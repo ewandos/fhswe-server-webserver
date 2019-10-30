@@ -3,6 +3,7 @@ package BIF.SWE1;
 import BIF.SWE1.interfaces.Response;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,11 +12,30 @@ public class HttpResponse implements Response {
     private int statusCode;
     private Map<String, String> headers = new HashMap<String, String>();
     private StringBuilder content = new StringBuilder();
-    private String contentType;
-    private String serverHeader;
+    private String contentType = "text/plain";
+    private String serverHeader = "BIF-BIF.SWE1-Server";
 
-    public HttpResponse() {
+    /**
+     * Takes the response line, general headers, custom headers and content and concat them
+     * @return Entire httpResponse, ready for sending
+     */
+    private String buildResponse() {
+        // append general headers to string
+        StringBuilder head = new StringBuilder();
+        head.append("HTTP/1.1 ").append(getStatus()).append("\r\n");
+        head.append("Server: ").append(serverHeader).append("\r\n");
+        head.append("Content-Length: ").append(getContentLength()).append("\r\n");
+        head.append("Content-Type: ").append(getContentType()).append("\r\n");
 
+        // append custom headers to string
+        for (Map.Entry<String, String> entry : headers.entrySet())
+            head.append(entry.getKey()).append(": ").append(entry.getValue()).append("\r\n");
+        head.append("\r\n");
+
+        // concat responseHead and content
+        String httpResponse = head.toString() + content.toString();
+
+        return httpResponse;
     }
 
     @Override
@@ -25,7 +45,7 @@ public class HttpResponse implements Response {
 
     @Override
     public int getContentLength() {
-        return content.length();
+        return content.toString().getBytes(StandardCharsets.UTF_8).length;
     }
 
     @Override
@@ -40,7 +60,10 @@ public class HttpResponse implements Response {
 
     @Override
     public int getStatusCode() {
-        return statusCode;
+        if (statusCode == 0)
+            throw new IllegalStateException("Status code is not set!");
+         else
+            return statusCode;
     }
 
     @Override
@@ -54,7 +77,7 @@ public class HttpResponse implements Response {
             case 200:
                 return "200 OK";
             case 404:
-                return "404 NOT FOUND";
+                return "404 Not Found";
             case 500:
                 return "500 INTERNAL SERVER ERROR";
             default:
@@ -74,12 +97,7 @@ public class HttpResponse implements Response {
 
     @Override
     public void setServerHeader(String server) {
-        StringBuilder builder = new StringBuilder();
-        builder.append("HTTP/1.1 ").append(getStatus()).append("\r\n");
-        builder.append("Server: ").append(server).append("\r\n");
-        builder.append("Content-Length: ").append(getContentLength()).append("\r\n");
-        builder.append("Content-Type: ").append(getContentType()).append("\r\n\r\n");
-        serverHeader = builder.toString();
+        serverHeader = server;
     }
 
     @Override
@@ -107,10 +125,16 @@ public class HttpResponse implements Response {
 
     @Override
     public void send(OutputStream network) {
+        /* Valid for the UnitTest, but throws Error at every other test, which tries to send no content
+        if (this.getContentType() != null && this.getContentLength() <= 0)
+            throw new IllegalStateException("Trying to send response without content while content type set!");
+         */
+
+        String httpResponse = buildResponse();
+
         try {
             OutputStreamWriter osw = new OutputStreamWriter(network);
             BufferedWriter bw = new BufferedWriter(osw);
-            String httpResponse = serverHeader + content.toString();
             bw.write(httpResponse);
             bw.flush();
         } catch(Exception e) {

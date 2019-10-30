@@ -225,13 +225,11 @@ public class UEB4Test extends AbstractTestFixture<UEB4> {
 
 			@Override
 			public float canHandle(Request req) {
-				// TODO Auto-generated method stub
 				return 0;
 			}
 
 			@Override
 			public Response handle(Request req) {
-				// TODO Auto-generated method stub
 				return null;
 			}
         	

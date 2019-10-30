@@ -9,15 +9,12 @@ public class Ueb5TestPlugin implements Plugin {
 
 	@Override
 	public float canHandle(Request req) {
-		// TODO Auto-generated method stub
-		return 0.5f;
+		return 0;
 	}
 
 	@Override
 	public Response handle(Request req) {
-		// TODO Auto-generated method stub
-		String mainPage = "<!DOCTYPE html>\n<html>\n<head>\n<title>SWE Webserver</title>\n\n</head>\n<body>\n\n<h1>Software Engineering</h1>\n<p>Krass konkrete Website!</p>";
-		return HttpResponseFactory.create(200, "EwiServer", "text/plain", mainPage);
+		return null;
 	}
 
 }
