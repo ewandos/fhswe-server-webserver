@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
  * redundant if implemented in every plugin.
  */
 public class DynamicPlugin implements Plugin {
+    /** The name of the plugin. The plugin will be accessible by this name.*/
     protected String identifier = "dynamic";
 
     @Override
