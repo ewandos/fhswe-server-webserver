@@ -23,4 +23,17 @@ public class HttpResponseFactory {
         response.setServerHeader(server);
         return response;
     }
+
+    /**
+     * Default StatusCode and Server
+     * @param contentType Type of content, send to the server
+     * @param content Content String to send
+     * @return HttpResponse-Object
+     */
+    public static HttpResponse create(String contentType, String content) {
+        HttpResponse response = new HttpResponse();
+        response.setContent(content);
+        response.setContentType(contentType);
+        return response;
+    }
 }
