@@ -125,10 +125,10 @@ public class HttpResponse implements Response {
 
     @Override
     public void send(OutputStream network) {
-        /* Valid for the UnitTest, but throws Error at every other test, which tries to send no content
+        /* Valid for the UnitTest, but throws Error at every other test, which tries to send no content*/
         if (this.getContentType() != null && this.getContentLength() <= 0)
             throw new IllegalStateException("Trying to send response without content while content type set!");
-         */
+
 
         String httpResponse = buildResponse();
 

@@ -20,6 +20,7 @@ public class HttpRequest implements Request {
     private Url url;
     private Map<String, String> headers = new HashMap<String, String>();
     private int headersCount;
+    private String content;
 
     private final String pattern = "^(GET|POST|get|post)\\s/((http(s)?://)?(www\\.)?/?[a-zA-Z0-9/]+\\.[a-z]+\\??([a-zA-Z0-9/_]+=[a-zA-Z0-9]+&?)*)?\\sHTTP/(1\\.0|1\\.1|2)$";
     private final Pattern REGEXP = Pattern.compile(pattern, Pattern.MULTILINE);
@@ -63,6 +64,22 @@ public class HttpRequest implements Request {
         }
     }
 
+    /**
+     * Parses the content/body of a httpRequest
+     * @param reader takes a BufferedReader to get all lines
+     * @throws Exception if there is an Exception at parsing the content
+     */
+    private void parseContent(BufferedReader reader) throws Exception {
+        StringBuilder builder = new StringBuilder();
+        String line = reader.readLine();
+        while(line != null && !line.equals("")) {
+            builder.append(line);
+            line = reader.readLine();
+        }
+
+        content = builder.toString();
+    }
+
     @Override
     public boolean isValid() {
         if (url == null && method == null) {
@@ -74,6 +91,8 @@ public class HttpRequest implements Request {
                     return false;
 
                 parseHeaders(reader);
+                parseContent(reader);
+
                 return true;
             } catch (Exception e) {
                 System.out.println(e.getMessage());
@@ -85,7 +104,7 @@ public class HttpRequest implements Request {
 
     @Override
     public String getMethod() {
-        return method;
+        return method.trim();
     }
 
     @Override
@@ -112,12 +131,12 @@ public class HttpRequest implements Request {
 
     @Override
     public int getContentLength() {
-        return 0;
+        return content.length();
     }
 
     @Override
     public String getContentType() {
-        return null;
+        return headers.getOrDefault("content-type", "text/plain");
     }
 
     @Override
@@ -127,7 +146,7 @@ public class HttpRequest implements Request {
 
     @Override
     public String getContentString() {
-        return null;
+        return content;
     }
 
     @Override

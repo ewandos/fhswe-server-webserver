@@ -24,12 +24,12 @@ public class Session implements Runnable{
             HttpRequest request = new HttpRequest(clientSocket.getInputStream());
             request.isValid();
 
-            WebPlugin plugin = new WebPlugin();
+            DynamicPlugin plugin = new DynamicPlugin();
             if(plugin.canHandle(request) > 0) {
                 plugin.handle(request).send(clientSocket.getOutputStream());
             } else {
                 String mainPage = "<!DOCTYPE html>\n<html>\n<head>\n<title>SWE Webserver</title>\n\n</head>\n<body>\n\n<h1>No Plugin found!</h1>\n<p>You tried to use a unknown plugin!</p>";
-                HttpResponse response = HttpResponseFactory.create(200, "EwiServer", "text/html", mainPage);
+                HttpResponse response = HttpResponseFactory.create(200, "BIF-BIF.SWE1-Server", "text/html", mainPage);
                 response.send(clientSocket.getOutputStream());
             }
 

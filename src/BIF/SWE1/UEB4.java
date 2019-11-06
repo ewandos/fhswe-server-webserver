@@ -13,14 +13,14 @@ public class UEB4 {
 	}
 
 	public Request getRequest(InputStream inputStream) {
-		return null;
+		return new HttpRequest(inputStream);
 	}
 
 	public Response getResponse() {
-		return null;
+		return new HttpResponse();
 	}
 
 	public PluginManager getPluginManager() {
-		return null;
+		return new WebPluginManager();
 	}
 }
