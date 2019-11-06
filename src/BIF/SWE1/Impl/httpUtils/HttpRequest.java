@@ -1,4 +1,4 @@
-package BIF.SWE1;
+package BIF.SWE1.Impl.httpUtils;
 
 import BIF.SWE1.interfaces.Request;
 import BIF.SWE1.interfaces.Url;

@@ -2,6 +2,9 @@ package BIF.SWE1;
 
 import java.io.InputStream;
 
+import BIF.SWE1.Impl.PluginSystem.TestPlugin;
+import BIF.SWE1.Impl.httpUtils.HttpRequest;
+import BIF.SWE1.Impl.httpUtils.HttpResponse;
 import BIF.SWE1.interfaces.Plugin;
 import BIF.SWE1.interfaces.Request;
 import BIF.SWE1.interfaces.Response;

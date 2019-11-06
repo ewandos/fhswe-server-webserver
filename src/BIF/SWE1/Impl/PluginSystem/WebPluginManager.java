@@ -1,4 +1,4 @@
-package BIF.SWE1;
+package BIF.SWE1.Impl.PluginSystem;
 
 import BIF.SWE1.interfaces.Plugin;
 import BIF.SWE1.interfaces.PluginManager;

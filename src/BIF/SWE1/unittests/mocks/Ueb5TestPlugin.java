@@ -1,6 +1,5 @@
 package BIF.SWE1.unittests.mocks;
 
-import BIF.SWE1.HttpResponseFactory;
 import BIF.SWE1.interfaces.Plugin;
 import BIF.SWE1.interfaces.Request;
 import BIF.SWE1.interfaces.Response;

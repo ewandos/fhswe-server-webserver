@@ -1,5 +1,10 @@
 package BIF.SWE1;
 
+import BIF.SWE1.Impl.PluginSystem.DynamicPlugin;
+import BIF.SWE1.Impl.httpUtils.HttpRequest;
+import BIF.SWE1.Impl.httpUtils.HttpResponse;
+import BIF.SWE1.Impl.httpUtils.HttpResponseFactory;
+
 import java.net.Socket;
 
 /**

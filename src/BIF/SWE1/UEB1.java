@@ -1,5 +1,6 @@
 package BIF.SWE1;
 
+import BIF.SWE1.Impl.httpUtils.WebUrl;
 import BIF.SWE1.interfaces.Url;
 
 public class UEB1 {

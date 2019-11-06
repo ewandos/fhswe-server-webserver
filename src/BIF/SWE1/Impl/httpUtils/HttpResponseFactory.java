@@ -1,4 +1,4 @@
-package BIF.SWE1;
+package BIF.SWE1.Impl.httpUtils;
 
 /**
  * Can be used for different builds of a HttpResponse,

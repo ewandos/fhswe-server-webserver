@@ -2,6 +2,9 @@ package BIF.SWE1;
 
 import java.io.InputStream;
 
+import BIF.SWE1.Impl.httpUtils.HttpRequest;
+import BIF.SWE1.Impl.httpUtils.HttpResponse;
+import BIF.SWE1.Impl.httpUtils.WebUrl;
 import BIF.SWE1.interfaces.Request;
 import BIF.SWE1.interfaces.Response;
 import BIF.SWE1.interfaces.Url;
