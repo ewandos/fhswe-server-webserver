@@ -71,7 +71,12 @@ public class HttpRequest implements Request {
      */
     private void parseContent(BufferedReader reader) throws Exception {
         StringBuilder builder = new StringBuilder();
-        String line = reader.readLine();
+        String line = "";
+
+        // checks if something is ready to be read (works with nextChar and nChars fields)
+        if (reader.ready())
+            line = reader.readLine();
+
         while(line != null && !line.equals("")) {
             builder.append(line);
             line = reader.readLine();
