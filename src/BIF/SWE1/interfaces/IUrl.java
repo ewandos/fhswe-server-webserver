@@ -2,7 +2,7 @@ package BIF.SWE1.interfaces;
 
 import java.util.Map;
 
-public interface Url {
+public interface IUrl {
 
 	/**
 	 * @return Returns the raw url.

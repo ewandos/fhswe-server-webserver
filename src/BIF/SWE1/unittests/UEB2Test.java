@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import BIF.SWE1.interfaces.IRequest;
 import BIF.SWE1.interfaces.IResponse;
-import BIF.SWE1.interfaces.Url;
+import BIF.SWE1.interfaces.IUrl;
 import BIF.SWE1.UEB2;
 
 public class UEB2Test extends AbstractTestFixture<UEB2> {
@@ -23,21 +23,21 @@ public class UEB2Test extends AbstractTestFixture<UEB2> {
 	/********************* More URL tests *********************/
 	@Test
 	public void url_should_create_with_path_fragment() throws Exception {
-		Url obj = createInstance().getUrl("/test.jpg#foo");
+		IUrl obj = createInstance().getUrl("/test.jpg#foo");
 		assertNotNull("UEB2.GetUrl returned null", obj);
 
 		assertEquals("/test.jpg", obj.getPath());
 	}
 	@Test
 	public void url_should_parse_fragment() throws Exception {
-		Url obj = createInstance().getUrl("/test.jpg#foo");
+		IUrl obj = createInstance().getUrl("/test.jpg#foo");
 		assertNotNull("UEB2.GetUrl returned null", obj);
 
 		assertEquals("foo", obj.getFragment());
 	}
 	@Test
 	public void url_should_split_segments() throws Exception {
-		Url obj = createInstance().getUrl("/foo/bar/test.jpg");
+		IUrl obj = createInstance().getUrl("/foo/bar/test.jpg");
 		assertNotNull("UEB2.GetUrl returned null", obj);
 
 		assertNotNull(obj.getSegments());

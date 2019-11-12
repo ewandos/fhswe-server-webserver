@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class HttpResponse implements IResponse {
+public class Response implements IResponse {
     private int statusCode;
     private Map<String, String> headers = new HashMap<String, String>();
     private StringBuilder content = new StringBuilder();

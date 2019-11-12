@@ -18,7 +18,7 @@ public interface IRequest {
 	/**
 	 * @return Returns a URL object of the request. Never returns null.
 	 */
-	Url getUrl();
+	IUrl getUrl();
 
 	/**
 	 * @return Returns the request header. Never returns null. All keys must be

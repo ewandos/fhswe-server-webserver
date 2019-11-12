@@ -92,12 +92,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </div>
 <div class="contentContainer">
 <div class="inheritance" title="Inheritance Tree">java.lang.Object
-<div class="inheritance">BIF.SWE1.imp.httpUtils.WebUrl</div>
+<div class="inheritance">BIF.SWE1.imp.httpUtils.Url</div>
 </div>
 <section class="description">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><code>BIF.SWE1.interfaces.Url</code></dd>
+<dd><code>BIF.SWE1.interfaces.IUrl</code></dd>
 </dl>
 <hr>
 <pre>public class <span class="typeNameLabel">WebUrl</span>
@@ -238,7 +238,7 @@ implements BIF.SWE1.interfaces.Url</pre>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">java.lang.String</span>&nbsp;<span class="memberName">getRawUrl</span>()</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>getRawUrl</code>&nbsp;in interface&nbsp;<code>BIF.SWE1.interfaces.Url</code></dd>
+<dd><code>getRawUrl</code>&nbsp;in interface&nbsp;<code>BIF.SWE1.interfaces.IUrl</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>Returns the raw url.</dd>
 </dl>
@@ -250,7 +250,7 @@ implements BIF.SWE1.interfaces.Url</pre>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">java.lang.String</span>&nbsp;<span class="memberName">getPath</span>()</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>getPath</code>&nbsp;in interface&nbsp;<code>BIF.SWE1.interfaces.Url</code></dd>
+<dd><code>getPath</code>&nbsp;in interface&nbsp;<code>BIF.SWE1.interfaces.IUrl</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>Returns the path of the url, without parameter.</dd>
 </dl>
@@ -262,7 +262,7 @@ implements BIF.SWE1.interfaces.Url</pre>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;</span>&nbsp;<span class="memberName">getParameter</span>()</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>getParameter</code>&nbsp;in interface&nbsp;<code>BIF.SWE1.interfaces.Url</code></dd>
+<dd><code>getParameter</code>&nbsp;in interface&nbsp;<code>BIF.SWE1.interfaces.IUrl</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>Returns a dictionary with the parameter of the url. Never returns
          null.</dd>
@@ -275,7 +275,7 @@ implements BIF.SWE1.interfaces.Url</pre>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">int</span>&nbsp;<span class="memberName">getParameterCount</span>()</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>getParameterCount</code>&nbsp;in interface&nbsp;<code>BIF.SWE1.interfaces.Url</code></dd>
+<dd><code>getParameterCount</code>&nbsp;in interface&nbsp;<code>BIF.SWE1.interfaces.IUrl</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>Returns the number of parameter of the url. Returns 0 if there are no parameter.</dd>
 </dl>
@@ -287,7 +287,7 @@ implements BIF.SWE1.interfaces.Url</pre>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">java.lang.String[]</span>&nbsp;<span class="memberName">getSegments</span>()</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>getSegments</code>&nbsp;in interface&nbsp;<code>BIF.SWE1.interfaces.Url</code></dd>
+<dd><code>getSegments</code>&nbsp;in interface&nbsp;<code>BIF.SWE1.interfaces.IUrl</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>Returns the segments of the url path. A segment is divided by '/'
          chars. Never returns null.</dd>
@@ -300,7 +300,7 @@ implements BIF.SWE1.interfaces.Url</pre>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">java.lang.String</span>&nbsp;<span class="memberName">getFileName</span>()</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>getFileName</code>&nbsp;in interface&nbsp;<code>BIF.SWE1.interfaces.Url</code></dd>
+<dd><code>getFileName</code>&nbsp;in interface&nbsp;<code>BIF.SWE1.interfaces.IUrl</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>Returns the filename (with extension) of the url path. If the url
          contains no filename, a empty string is returned. Never returns
@@ -315,7 +315,7 @@ implements BIF.SWE1.interfaces.Url</pre>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">java.lang.String</span>&nbsp;<span class="memberName">getExtension</span>()</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>getExtension</code>&nbsp;in interface&nbsp;<code>BIF.SWE1.interfaces.Url</code></dd>
+<dd><code>getExtension</code>&nbsp;in interface&nbsp;<code>BIF.SWE1.interfaces.IUrl</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>Returns the extension of the url filename, including the leading
          dot. If the url contains no filename, a empty string is returned.
@@ -329,7 +329,7 @@ implements BIF.SWE1.interfaces.Url</pre>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">java.lang.String</span>&nbsp;<span class="memberName">getFragment</span>()</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>getFragment</code>&nbsp;in interface&nbsp;<code>BIF.SWE1.interfaces.Url</code></dd>
+<dd><code>getFragment</code>&nbsp;in interface&nbsp;<code>BIF.SWE1.interfaces.IUrl</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>Returns the url fragment. A fragment is the part after a '#' char
          at the end of the url. If the url contains no fragment, a empty

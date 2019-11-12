@@ -1,6 +1,6 @@
 package BIF.SWE1;
 
-import BIF.SWE1.imp.httpUtils.HttpRequest;
+import BIF.SWE1.imp.httpUtils.Request;
 import BIF.SWE1.imp.pluginSystem.WebPluginManager;
 
 import java.net.Socket;
@@ -24,7 +24,7 @@ public class Session implements Runnable{
     @Override
     public void run() {
         try{
-            HttpRequest request = new HttpRequest(clientSocket.getInputStream());
+            Request request = new Request(clientSocket.getInputStream());
             request.isValid();
 
             WebPluginManager plManager = new WebPluginManager();

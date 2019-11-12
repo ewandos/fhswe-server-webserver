@@ -1,7 +1,7 @@
 package BIF.SWE1.imp.httpUtils;
 
 import BIF.SWE1.interfaces.IRequest;
-import BIF.SWE1.interfaces.Url;
+import BIF.SWE1.interfaces.IUrl;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -14,10 +14,10 @@ import java.util.regex.Pattern;
 /**
  * httpRequest takes an InputStream containing a HTTP Request validates it by RegExp and gathers all segments
  */
-public class HttpRequest implements IRequest {
+public class Request implements IRequest {
     private InputStreamReader stream;
     private String method;
-    private WebUrl url;
+    private Url url;
     private Map<String, String> headers = new HashMap<String, String>();
     private int headersCount;
     private String content;
@@ -25,7 +25,7 @@ public class HttpRequest implements IRequest {
     private final String pattern = "^(GET|POST|get|post)\\s/((http(s)?://)?(www\\.)?/?[a-zA-Z0-9/]+\\.[a-z]+\\??([a-zA-Z0-9/_]+=[a-zA-Z0-9]+&?)*)?\\sHTTP/(1\\.0|1\\.1|2)$";
     private final Pattern REGEXP = Pattern.compile(pattern, Pattern.MULTILINE);
 
-    public HttpRequest(InputStream stream) {
+    public Request(InputStream stream) {
         this.stream = new InputStreamReader(stream);
     }
 
@@ -40,7 +40,7 @@ public class HttpRequest implements IRequest {
 
         if (regexp.matches()) {
             method = line.trim().substring(0, line.indexOf("/")).toUpperCase();
-            url = new WebUrl(line.trim().substring(line.indexOf("/"), line.lastIndexOf(" ")));
+            url = new Url(line.trim().substring(line.indexOf("/"), line.lastIndexOf(" ")));
             System.out.println("Received a valid request!");
         } else {
             System.out.println(line);
@@ -114,7 +114,7 @@ public class HttpRequest implements IRequest {
     }
 
     @Override
-    public Url getUrl() {
+    public IUrl getUrl() {
         isValid();
         return url;
     }

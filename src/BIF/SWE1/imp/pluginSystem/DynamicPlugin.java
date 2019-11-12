@@ -1,6 +1,6 @@
 package BIF.SWE1.imp.pluginSystem;
 
-import BIF.SWE1.imp.httpUtils.HttpResponseFactory;
+import BIF.SWE1.imp.httpUtils.ResponseFactory;
 import BIF.SWE1.interfaces.IPlugin;
 import BIF.SWE1.interfaces.IRequest;
 import BIF.SWE1.interfaces.IResponse;
@@ -42,6 +42,6 @@ public class DynamicPlugin implements IPlugin {
         * specific dynamicPlugin-Implementation it should load a basic response
         */
         String basicResponse = "This is the base plugin for dynamic plugins. Please use a specific implementation!";
-        return HttpResponseFactory.create(200, "BIF-BIF.SWE1-Server", "text/html", basicResponse);
+        return ResponseFactory.create(200, "BIF-BIF.SWE1-Server", "text/html", basicResponse);
     }
 }

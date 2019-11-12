@@ -4,8 +4,8 @@ package BIF.SWE1.imp.httpUtils;
  * Can be used for different builds of a HttpResponse,
  * like if you don't set a statusCode it 200 by default
  */
-public class HttpResponseFactory {
-     public HttpResponseFactory() {
+public class ResponseFactory {
+     public ResponseFactory() {
     }
 
     /**
@@ -15,8 +15,8 @@ public class HttpResponseFactory {
      * @param content Content String to send
      * @return HttpResponse-Object
      */
-    public static HttpResponse create(int statusCode, String server, String contentType, String content) {
-        HttpResponse response = new HttpResponse();
+    public static Response create(int statusCode, String server, String contentType, String content) {
+        Response response = new Response();
         response.setStatusCode(statusCode);
         response.setContent(content);
         response.setContentType(contentType);
@@ -30,8 +30,8 @@ public class HttpResponseFactory {
      * @param content Content String to send
      * @return HttpResponse-Object
      */
-    public static HttpResponse create(String contentType, String content) {
-        HttpResponse response = new HttpResponse();
+    public static Response create(String contentType, String content) {
+        Response response = new Response();
         response.setContent(content);
         response.setContentType(contentType);
         return response;

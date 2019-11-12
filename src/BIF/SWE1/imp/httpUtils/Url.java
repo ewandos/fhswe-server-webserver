@@ -1,6 +1,6 @@
 package BIF.SWE1.imp.httpUtils;
 
-import BIF.SWE1.interfaces.Url;
+import BIF.SWE1.interfaces.IUrl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * WebUrl takes a raw URL as a string and gather every segment like the path or parameters.
  */
-public class WebUrl implements Url{
+public class Url implements IUrl {
     private String rawUrl;
     private String path;
     private String fragment;
@@ -27,7 +27,7 @@ public class WebUrl implements Url{
     /**
      * @param rawUrl The raw URL as a String.
      */
-    public WebUrl(String rawUrl) {
+    public Url(String rawUrl) {
         this.rawUrl = rawUrl;
     }
 
