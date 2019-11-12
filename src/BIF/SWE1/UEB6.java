@@ -3,9 +3,9 @@ package BIF.SWE1;
 import java.io.InputStream;
 import java.time.LocalDate;
 
-import BIF.SWE1.interfaces.Plugin;
-import BIF.SWE1.interfaces.PluginManager;
-import BIF.SWE1.interfaces.Request;
+import BIF.SWE1.interfaces.IPlugin;
+import BIF.SWE1.interfaces.IPluginManager;
+import BIF.SWE1.interfaces.IRequest;
 
 public class UEB6 {
 
@@ -13,23 +13,23 @@ public class UEB6 {
 
 	}
 
-	public Request getRequest(InputStream inputStream) {
+	public IRequest getRequest(InputStream inputStream) {
 		return null;
 	}
 
-	public PluginManager getPluginManager() {
+	public IPluginManager getPluginManager() {
 		return null;
 	}
 
-	public Plugin getTemperaturePlugin() {
+	public IPlugin getTemperaturePlugin() {
 		return null;
 	}
 
-	public Plugin getNavigationPlugin() {
+	public IPlugin getNavigationPlugin() {
 		return null;
 	}
 
-	public Plugin getToLowerPlugin() {
+	public IPlugin getToLowerPlugin() {
 		return null;
 	}
 

@@ -8,8 +8,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import BIF.SWE1.interfaces.Request;
-import BIF.SWE1.interfaces.Response;
+import BIF.SWE1.interfaces.IRequest;
+import BIF.SWE1.interfaces.IResponse;
 import BIF.SWE1.interfaces.Url;
 import BIF.SWE1.UEB2;
 
@@ -47,14 +47,14 @@ public class UEB2Test extends AbstractTestFixture<UEB2> {
 	/********************* Basic request tests *********************/
 	@Test
 	public void request_hello_world() throws Exception {
-		Request obj = createInstance().getRequest(
+		IRequest obj = createInstance().getRequest(
 				RequestHelper.getValidRequestStream("/"));
 		assertNotNull("UEB2.GetRequest returned null", obj);
 	}
 
 	@Test
 	public void request_isValid_on_valid_request() throws Exception {
-		Request obj = createInstance().getRequest(
+		IRequest obj = createInstance().getRequest(
 				RequestHelper.getValidRequestStream("/"));
 		assertNotNull("UEB2.GetRequest returned null", obj);
 		assertTrue(obj.isValid());
@@ -62,7 +62,7 @@ public class UEB2Test extends AbstractTestFixture<UEB2> {
 
 	@Test
 	public void request_isInValid_on_invalid_request() throws Exception {
-		Request obj = createInstance().getRequest(
+		IRequest obj = createInstance().getRequest(
 				RequestHelper.getInvalidRequestStream());
 		assertNotNull("UEB2.GetRequest returned null", obj);
 
@@ -71,7 +71,7 @@ public class UEB2Test extends AbstractTestFixture<UEB2> {
 
 	@Test
 	public void request_isInValid_on_empty_request() throws Exception {
-		Request obj = createInstance().getRequest(
+		IRequest obj = createInstance().getRequest(
 				RequestHelper.getEmptyRequestStream());
 		assertNotNull("UEB2.GetRequest returned null", obj);
 
@@ -80,7 +80,7 @@ public class UEB2Test extends AbstractTestFixture<UEB2> {
 
 	@Test
 	public void request_should_parse_method_get() throws Exception {
-		Request obj = createInstance().getRequest(
+		IRequest obj = createInstance().getRequest(
 				RequestHelper.getValidRequestStream("/"));
 		assertNotNull("UEB2.GetRequest returned null", obj);
 		assertTrue(obj.isValid());
@@ -89,7 +89,7 @@ public class UEB2Test extends AbstractTestFixture<UEB2> {
 
 	@Test
 	public void request_should_parse_method_post() throws Exception {
-		Request obj = createInstance().getRequest(
+		IRequest obj = createInstance().getRequest(
 				RequestHelper.getValidRequestStream("/", "POST"));
 		assertNotNull("UEB2.GetRequest returned null", obj);
 
@@ -99,7 +99,7 @@ public class UEB2Test extends AbstractTestFixture<UEB2> {
 	
 	@Test
 	public void request_should_parse_method_post_lowercase() throws Exception {
-		Request obj = createInstance().getRequest(
+		IRequest obj = createInstance().getRequest(
 				RequestHelper.getValidRequestStream("/", "post"));
 		assertNotNull("UEB2.GetRequest returned null", obj);
 
@@ -109,7 +109,7 @@ public class UEB2Test extends AbstractTestFixture<UEB2> {
 	
 	@Test
 	public void request_should_be_invalid_on_method_foo() throws Exception {
-		Request obj = createInstance().getRequest(
+		IRequest obj = createInstance().getRequest(
 				RequestHelper.getValidRequestStream("/", "FOO"));
 		assertNotNull("UEB2.GetRequest returned null", obj);
 
@@ -118,7 +118,7 @@ public class UEB2Test extends AbstractTestFixture<UEB2> {
 
 	@Test
 	public void request_should_parse_url() throws Exception {
-		Request obj = createInstance().getRequest(
+		IRequest obj = createInstance().getRequest(
 				RequestHelper.getValidRequestStream("/"));
 		assertNotNull("UEB2.GetRequest returned null", obj);
 
@@ -129,7 +129,7 @@ public class UEB2Test extends AbstractTestFixture<UEB2> {
 
 	@Test
 	public void request_should_parse_url_2() throws Exception {
-		Request obj = createInstance().getRequest(
+		IRequest obj = createInstance().getRequest(
 				RequestHelper.getValidRequestStream("/foo.html?a=1&b=2"));
 		assertNotNull("UEB2.GetRequest returned null", obj);
 		assertTrue(obj.isValid());
@@ -140,13 +140,13 @@ public class UEB2Test extends AbstractTestFixture<UEB2> {
 	/********************* Basic response tests *********************/
 	@Test
 	public void response_hello_world() throws Exception {
-		Response obj = createInstance().getResponse();
+		IResponse obj = createInstance().getResponse();
 		assertNotNull("UEB2.GetResponse returned null", obj);
 	}
 
 	@Test
 	public void response_should_throw_error_when_no_statuscode_was_set() throws Exception {
-		Response obj = createInstance().getResponse();
+		IResponse obj = createInstance().getResponse();
 
 		assertNotNull("UEB2.GetResponse returned null", obj);
 
@@ -157,7 +157,7 @@ public class UEB2Test extends AbstractTestFixture<UEB2> {
 
 	@Test
 	public void response_should_save_statuscode() throws Exception {
-		Response obj = createInstance().getResponse();
+		IResponse obj = createInstance().getResponse();
 		assertNotNull("UEB2.GetResponse returned null", obj);
 		obj.setStatusCode(404);
 		assertEquals(404, obj.getStatusCode());
@@ -165,7 +165,7 @@ public class UEB2Test extends AbstractTestFixture<UEB2> {
 
 	@Test
 	public void response_should_return_status_200() throws Exception {
-		Response obj = createInstance().getResponse();
+		IResponse obj = createInstance().getResponse();
 		assertNotNull("UEB2.GetResponse returned null", obj);
 		obj.setStatusCode(200);
 		assertEquals("200 OK", obj.getStatus().toUpperCase());
@@ -173,7 +173,7 @@ public class UEB2Test extends AbstractTestFixture<UEB2> {
 
 	@Test
 	public void response_should_return_status_404() throws Exception {
-		Response obj = createInstance().getResponse();
+		IResponse obj = createInstance().getResponse();
 		assertNotNull("UEB2.GetResponse returned null", obj);
 
 		obj.setStatusCode(404);
@@ -182,7 +182,7 @@ public class UEB2Test extends AbstractTestFixture<UEB2> {
 
 	@Test
 	public void response_should_return_status_500() throws Exception {
-		Response obj = createInstance().getResponse();
+		IResponse obj = createInstance().getResponse();
 		assertNotNull("UEB2.GetResponse returned null", obj);
 
 		obj.setStatusCode(500);
@@ -191,7 +191,7 @@ public class UEB2Test extends AbstractTestFixture<UEB2> {
 
 	@Test
 	public void response_should_save_header() throws Exception {
-		Response obj = createInstance().getResponse();
+		IResponse obj = createInstance().getResponse();
 		assertNotNull("UEB2.GetResponse returned null", obj);
 
 		obj.addHeader("foo", "bar");
@@ -202,7 +202,7 @@ public class UEB2Test extends AbstractTestFixture<UEB2> {
 
 	@Test
 	public void response_should_replace_header() throws Exception {
-		Response obj = createInstance().getResponse();
+		IResponse obj = createInstance().getResponse();
 		assertNotNull("UEB2.GetResponse returned null", obj);
 
 		obj.addHeader("foo", "bar");

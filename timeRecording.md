@@ -13,3 +13,4 @@
 23.10. - 45min - Multithreading and Javadoc Comments<br>
 24.10. - 100min - Implementation of Request & Response<br>
 27.10. - 120min - Implementation of Request & Response<br>
+06.11. - 90min - Created canHandle() Systen, BugFixes, Documentation<br>

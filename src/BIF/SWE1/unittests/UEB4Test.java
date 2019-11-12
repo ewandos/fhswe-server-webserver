@@ -14,10 +14,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import BIF.SWE1.interfaces.Plugin;
-import BIF.SWE1.interfaces.PluginManager;
-import BIF.SWE1.interfaces.Request;
-import BIF.SWE1.interfaces.Response;
+import BIF.SWE1.interfaces.IPlugin;
+import BIF.SWE1.interfaces.IPluginManager;
+import BIF.SWE1.interfaces.IRequest;
+import BIF.SWE1.interfaces.IResponse;
 import BIF.SWE1.UEB4;
 
 /* Placeholder */
@@ -54,7 +54,7 @@ public class UEB4Test extends AbstractTestFixture<UEB4> {
 
 	@Test
 	public void request_should_handle_post() throws Exception {
-		Request obj = createInstance().getRequest(RequestHelper.getValidRequestStream("/", "POST"));
+		IRequest obj = createInstance().getRequest(RequestHelper.getValidRequestStream("/", "POST"));
 		assertNotNull("UEB4.GetRequest returned null", obj);
 		assertTrue(obj.isValid());
 		assertEquals("POST", obj.getMethod());
@@ -62,7 +62,7 @@ public class UEB4Test extends AbstractTestFixture<UEB4> {
 
 	@Test
 	public void request_should_parse_post_content_length() throws Exception {
-		Request obj = createInstance().getRequest(RequestHelper.getValidRequestStream("/", "POST", "x=a&y=b"));
+		IRequest obj = createInstance().getRequest(RequestHelper.getValidRequestStream("/", "POST", "x=a&y=b"));
 		assertNotNull("UEB4.GetRequest returned null", obj);
 		assertTrue(obj.isValid());
 		assertEquals("POST", obj.getMethod());
@@ -71,7 +71,7 @@ public class UEB4Test extends AbstractTestFixture<UEB4> {
 
 	@Test
 	public void request_should_parse_post_content_type() throws Exception {
-		Request obj = createInstance().getRequest(RequestHelper.getValidRequestStream("/", "POST", "x=a&y=b"));
+		IRequest obj = createInstance().getRequest(RequestHelper.getValidRequestStream("/", "POST", "x=a&y=b"));
 		assertNotNull("UEB4.GetRequest returned null", obj);
 		assertTrue(obj.isValid());
 		assertEquals("POST", obj.getMethod());
@@ -80,7 +80,7 @@ public class UEB4Test extends AbstractTestFixture<UEB4> {
 
 	@Test
 	public void request_should_return_post_content() throws Exception {
-		Request obj = createInstance().getRequest(RequestHelper.getValidRequestStream("/", "POST", "x=a&y=b"));
+		IRequest obj = createInstance().getRequest(RequestHelper.getValidRequestStream("/", "POST", "x=a&y=b"));
 		assertNotNull("UEB4.GetRequest returned null", obj);
 		assertTrue(obj.isValid());
 		assertEquals("POST", obj.getMethod());
@@ -93,7 +93,7 @@ public class UEB4Test extends AbstractTestFixture<UEB4> {
 
 	@Test
 	public void request_should_return_post_content_as_string() throws Exception {
-		Request obj = createInstance().getRequest(RequestHelper.getValidRequestStream("/", "POST", "x=a&y=b"));
+		IRequest obj = createInstance().getRequest(RequestHelper.getValidRequestStream("/", "POST", "x=a&y=b"));
 		assertNotNull("UEB4.GetRequest returned null", obj);
 		assertTrue(obj.isValid());
 		assertEquals("POST", obj.getMethod());
@@ -103,7 +103,7 @@ public class UEB4Test extends AbstractTestFixture<UEB4> {
 
 	@Test
 	public void request_should_return_post_content_as_bytes() throws Exception {
-		Request obj = createInstance().getRequest(RequestHelper.getValidRequestStream("/", "POST", "x=a&y=b"));
+		IRequest obj = createInstance().getRequest(RequestHelper.getValidRequestStream("/", "POST", "x=a&y=b"));
 		assertNotNull("UEB4.GetRequest returned null", obj);
 		assertTrue(obj.isValid());
 		assertEquals("POST", obj.getMethod());
@@ -116,7 +116,7 @@ public class UEB4Test extends AbstractTestFixture<UEB4> {
 	/********************** Response *********************************/
 	@Test
 	public void response_should_send_byte_content() throws Exception {
-		Response obj = createInstance().getResponse();
+		IResponse obj = createInstance().getResponse();
 		assertNotNull("UEB4.GetResponse returned null", obj);
 		byte[] content = String.format("Hello World, my GUID is %s! Ignore UTF-8 chars!", java.util.UUID.randomUUID()).getBytes("UTF-8");
 		obj.setContent(content);
@@ -150,7 +150,7 @@ public class UEB4Test extends AbstractTestFixture<UEB4> {
 
 	@Test
 	public void response_should_send_stream_content() throws Exception {
-		Response obj = createInstance().getResponse();
+		IResponse obj = createInstance().getResponse();
 		assertNotNull("UEB4.GetResponse returned null", obj);
 		byte[] bytes = String.format("Hello World, my GUID is %s! Ignore UTF-8 chars!", java.util.UUID.randomUUID()).getBytes("UTF-8");
 		ByteArrayInputStream content = new ByteArrayInputStream(bytes);
@@ -186,20 +186,20 @@ public class UEB4Test extends AbstractTestFixture<UEB4> {
 	/********************** PluginManager *********************************/
 	@Test
 	public void pluginmanager_hello_world() {
-		PluginManager obj = createInstance().getPluginManager();
+		IPluginManager obj = createInstance().getPluginManager();
 		assertNotNull("UEB4.GetPluginManager returned null", obj);
 	}
 
 	@Test
 	public void pluginmanager_returns_plugins() {
-		PluginManager obj = createInstance().getPluginManager();
+		IPluginManager obj = createInstance().getPluginManager();
 		assertNotNull("UEB4.GetPluginManager returned null", obj);
 		assertNotNull(obj.getPlugins());
 	}
 
 	@Test
 	public void pluginmanager_returns_1_plugin() {
-		PluginManager obj = createInstance().getPluginManager();
+		IPluginManager obj = createInstance().getPluginManager();
 		assertNotNull("UEB4.GetPluginManager returned null", obj);
 		assertNotNull(obj.getPlugins());
 		assertTrue(obj.getPlugins().iterator().hasNext());
@@ -207,29 +207,29 @@ public class UEB4Test extends AbstractTestFixture<UEB4> {
 
 	@Test
 	public void pluginmanager_plugins_are_not_null() {
-		PluginManager obj = createInstance().getPluginManager();
+		IPluginManager obj = createInstance().getPluginManager();
 		assertNotNull("UEB4.GetPluginManager returned null", obj);
 		assertNotNull(obj.getPlugins());
-		for (Plugin p : obj.getPlugins()) {
+		for (IPlugin p : obj.getPlugins()) {
 			assertNotNull(p);
 		}
 	}
 	
 	@Test
 	public void pluginmanager_should_add_plugin() {
-		PluginManager obj = createInstance().getPluginManager();
+		IPluginManager obj = createInstance().getPluginManager();
 		assertNotNull("UEB4.GetPluginManager returned null", obj);
 		assertNotNull(obj.getPlugins());
 		long count = StreamSupport.stream(obj.getPlugins().spliterator(), false).count();			
-        Plugin myPlugin = new Plugin() {
+        IPlugin myPlugin = new IPlugin() {
 
 			@Override
-			public float canHandle(Request req) {
+			public float canHandle(IRequest req) {
 				return 0;
 			}
 
 			@Override
-			public Response handle(Request req) {
+			public IResponse handle(IRequest req) {
 				return null;
 			}
         	
@@ -237,7 +237,7 @@ public class UEB4Test extends AbstractTestFixture<UEB4> {
         obj.add(myPlugin);
         assertEquals(count + 1, StreamSupport.stream(obj.getPlugins().spliterator(), false).count());
         boolean found = false;
-		for (Plugin p : obj.getPlugins()) {
+		for (IPlugin p : obj.getPlugins()) {
 			if(p == myPlugin) found = true;
 		}
 		
@@ -246,7 +246,7 @@ public class UEB4Test extends AbstractTestFixture<UEB4> {
 	
 	@Test
 	public void pluginmanager_should_clear_plugins() {
-		PluginManager obj = createInstance().getPluginManager();
+		IPluginManager obj = createInstance().getPluginManager();
 		assertNotNull("UEB4.GetPluginManager returned null", obj);
 		assertNotNull(obj.getPlugins());
 		

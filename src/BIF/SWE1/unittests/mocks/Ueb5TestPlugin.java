@@ -1,18 +1,18 @@
 package BIF.SWE1.unittests.mocks;
 
-import BIF.SWE1.interfaces.Plugin;
-import BIF.SWE1.interfaces.Request;
-import BIF.SWE1.interfaces.Response;
+import BIF.SWE1.interfaces.IPlugin;
+import BIF.SWE1.interfaces.IRequest;
+import BIF.SWE1.interfaces.IResponse;
 
-public class Ueb5TestPlugin implements Plugin {
+public class Ueb5TestPlugin implements IPlugin {
 
 	@Override
-	public float canHandle(Request req) {
+	public float canHandle(IRequest req) {
 		return 0;
 	}
 
 	@Override
-	public Response handle(Request req) {
+	public IResponse handle(IRequest req) {
 		return null;
 	}
 

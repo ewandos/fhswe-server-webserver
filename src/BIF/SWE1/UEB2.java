@@ -2,12 +2,11 @@ package BIF.SWE1;
 
 import java.io.InputStream;
 
-import BIF.SWE1.Impl.httpUtils.HttpRequest;
-import BIF.SWE1.Impl.httpUtils.HttpResponse;
-import BIF.SWE1.Impl.httpUtils.WebUrl;
-import BIF.SWE1.interfaces.Request;
-import BIF.SWE1.interfaces.Response;
-import BIF.SWE1.interfaces.Url;
+import BIF.SWE1.imp.httpUtils.HttpRequest;
+import BIF.SWE1.imp.httpUtils.HttpResponse;
+import BIF.SWE1.imp.httpUtils.WebUrl;
+import BIF.SWE1.interfaces.IRequest;
+import BIF.SWE1.interfaces.IResponse;
 
 public class UEB2 {
 
@@ -15,15 +14,15 @@ public class UEB2 {
 
 	}
 
-	public Url getUrl(String path) {
+	public WebUrl getUrl(String path) {
 		return new WebUrl(path);
 	}
 
-	public Request getRequest(InputStream inputStream) {
+	public IRequest getRequest(InputStream inputStream) {
 		return new HttpRequest(inputStream);
 	}
 
-	public Response getResponse() {
+	public IResponse getResponse() {
 		return new HttpResponse();
 	}
 }

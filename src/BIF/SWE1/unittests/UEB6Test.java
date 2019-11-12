@@ -19,9 +19,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import BIF.SWE1.interfaces.Plugin;
-import BIF.SWE1.interfaces.Request;
-import BIF.SWE1.interfaces.Response;
+import BIF.SWE1.interfaces.IPlugin;
+import BIF.SWE1.interfaces.IRequest;
+import BIF.SWE1.interfaces.IResponse;
 import BIF.SWE1.UEB6;
 
 
@@ -49,7 +49,7 @@ public class UEB6Test extends AbstractTestFixture<UEB6> {
 	public void tearDown() throws Exception {
 	}
 
-	private StringBuilder getBody(Response resp) throws UnsupportedEncodingException, IOException {
+	private StringBuilder getBody(IResponse resp) throws UnsupportedEncodingException, IOException {
 		StringBuilder body = new StringBuilder();
 
 		ByteArrayOutputStream ms = new ByteArrayOutputStream();
@@ -79,7 +79,7 @@ public class UEB6Test extends AbstractTestFixture<UEB6> {
 	{
 		UEB6 ueb = createInstance();
 
-		Plugin obj = ueb.getTemperaturePlugin();
+		IPlugin obj = ueb.getTemperaturePlugin();
 		assertNotNull("UEB6.getTemperaturePlugin returned null", obj);
 	}
 
@@ -89,7 +89,7 @@ public class UEB6Test extends AbstractTestFixture<UEB6> {
 	{
 		UEB6 ueb = createInstance();
 
-		Plugin obj = ueb.getTemperaturePlugin();
+		IPlugin obj = ueb.getTemperaturePlugin();
 		assertNotNull("UEB6.getTemperaturePlugin returned null", obj);
 
 		String url = ueb.getTemperatureUrl(LocalDate.of(2014, 1, 1), LocalDate.of(2014, 1, 2));
@@ -102,7 +102,7 @@ public class UEB6Test extends AbstractTestFixture<UEB6> {
 	{
 		UEB6 ueb = createInstance();
 
-		Plugin obj = ueb.getTemperaturePlugin();
+		IPlugin obj = ueb.getTemperaturePlugin();
 		assertNotNull("UEB6.getTemperaturePlugin returned null", obj);
 
 		String url_1 = ueb.getTemperatureUrl(LocalDate.of(2014, 1, 1), LocalDate.of(2014, 1, 2));
@@ -120,7 +120,7 @@ public class UEB6Test extends AbstractTestFixture<UEB6> {
 	{
 		UEB6 ueb = createInstance();
 
-		Plugin obj = ueb.getTemperaturePlugin();
+		IPlugin obj = ueb.getTemperaturePlugin();
 		assertNotNull("UEB6.getTemperaturePlugin returned null", obj);
 
 		String url = ueb.getTemperatureRestUrl(LocalDate.of(2014, 1, 1), LocalDate.of(2014, 1, 2));
@@ -133,7 +133,7 @@ public class UEB6Test extends AbstractTestFixture<UEB6> {
 	{
 		UEB6 ueb = createInstance();
 
-		Plugin obj = ueb.getTemperaturePlugin();
+		IPlugin obj = ueb.getTemperaturePlugin();
 		assertNotNull("UEB6.getTemperaturePlugin returned null", obj);
 
 		String url_html = ueb.getTemperatureUrl(LocalDate.of(2014, 1, 1), LocalDate.of(2014, 1, 2));
@@ -151,19 +151,19 @@ public class UEB6Test extends AbstractTestFixture<UEB6> {
 	{
 		UEB6 ueb = createInstance();
 
-		Plugin obj = ueb.getTemperaturePlugin();
+		IPlugin obj = ueb.getTemperaturePlugin();
 		assertNotNull("UEB6.getTemperaturePlugin returned null", obj);
 
 		String url = ueb.getTemperatureUrl(LocalDate.of(2014, 1, 1), LocalDate.of(2014, 1, 2));
 		assertNotNull("IUEB6.getTemperatureUrl returned null", url);
 		
-		Request req = ueb.getRequest(RequestHelper.getValidRequestStream(url));
+		IRequest req = ueb.getRequest(RequestHelper.getValidRequestStream(url));
 		assertNotNull("IUEB6.GetRequest returned null", req);
 
 		float canHandle = obj.canHandle(req);
 		assertTrue(canHandle > 0 && canHandle <= 1);
 
-		Response resp = obj.handle(req);
+		IResponse resp = obj.handle(req);
 		assertNotNull(resp);
 		assertEquals(200, resp.getStatusCode());
 		assertEquals("text/html", resp.getContentType());
@@ -176,19 +176,19 @@ public class UEB6Test extends AbstractTestFixture<UEB6> {
 	{
 		UEB6 ueb = createInstance();
 
-		Plugin obj = ueb.getTemperaturePlugin();
+		IPlugin obj = ueb.getTemperaturePlugin();
 		assertNotNull("UEB6.getTemperaturePlugin returned null", obj);
 
 		String url = ueb.getTemperatureRestUrl(LocalDate.of(2014, 1, 1), LocalDate.of(2014, 1, 2));
 		assertNotNull("IUEB6.getTemperatureUrl returned null", url);
 		
-		Request req = ueb.getRequest(RequestHelper.getValidRequestStream(url));
+		IRequest req = ueb.getRequest(RequestHelper.getValidRequestStream(url));
 		assertNotNull("IUEB6.GetRequest returned null", req);
 
 		float canHandle = obj.canHandle(req);
 		assertTrue(canHandle > 0 && canHandle <= 1);
 
-		Response resp = obj.handle(req);
+		IResponse resp = obj.handle(req);
 		assertNotNull(resp);
 		assertEquals(200, resp.getStatusCode());
 		assertEquals("text/xml", resp.getContentType());
@@ -201,7 +201,7 @@ public class UEB6Test extends AbstractTestFixture<UEB6> {
 	{
 		UEB6 ueb = createInstance();
 
-		Plugin obj = ueb.getNavigationPlugin();
+		IPlugin obj = ueb.getNavigationPlugin();
 		assertNotNull("UEB6.GetNavigationPlugin returned null", obj);
 	}
 
@@ -210,7 +210,7 @@ public class UEB6Test extends AbstractTestFixture<UEB6> {
 	{
 		UEB6 ueb = createInstance();
 
-		Plugin obj = ueb.getNavigationPlugin();
+		IPlugin obj = ueb.getNavigationPlugin();
 		assertNotNull("UEB6.GetNavigationPlugin returned null", obj);
 
 		String url = ueb.getNaviUrl();
@@ -222,19 +222,19 @@ public class UEB6Test extends AbstractTestFixture<UEB6> {
 	{
 		UEB6 ueb = createInstance();
 
-		Plugin obj = ueb.getNavigationPlugin();
+		IPlugin obj = ueb.getNavigationPlugin();
 		assertNotNull("UEB6.getNavigationPlugin returned null", obj);
 
 		String url = ueb.getNaviUrl();
 		assertNotNull("IUEB6.getNaviUrl returned null", url);
 		
-		Request req = ueb.getRequest(RequestHelper.getValidRequestStream(url, "POST", "street=Hauptplatz"));
+		IRequest req = ueb.getRequest(RequestHelper.getValidRequestStream(url, "POST", "street=Hauptplatz"));
 		assertNotNull("IUEB6.GetRequest returned null", req);
 
 		float canHandle = obj.canHandle(req);
 		assertTrue(canHandle > 0 && canHandle <= 1);
 
-		Response resp = obj.handle(req);
+		IResponse resp = obj.handle(req);
 		assertNotNull(resp);
 		assertEquals(200, resp.getStatusCode());
 		assertTrue(resp.getContentLength() > 0);
@@ -245,19 +245,19 @@ public class UEB6Test extends AbstractTestFixture<UEB6> {
 	{
 		UEB6 ueb = createInstance();
 
-		Plugin obj = ueb.getNavigationPlugin();
+		IPlugin obj = ueb.getNavigationPlugin();
 		assertNotNull("UEB6.getNavigationPlugin returned null", obj);
 
 		String url = ueb.getNaviUrl();
 		assertNotNull("IUEB6.getNaviUrl returned null", url);
 		
-		Request req = ueb.getRequest(RequestHelper.getValidRequestStream(url, "POST", "street=Hauptplatz"));
+		IRequest req = ueb.getRequest(RequestHelper.getValidRequestStream(url, "POST", "street=Hauptplatz"));
 		assertNotNull("IUEB6.GetRequest returned null", req);
 
 		float canHandle = obj.canHandle(req);
 		assertTrue(canHandle > 0 && canHandle <= 1);
 
-		Response resp = obj.handle(req);
+		IResponse resp = obj.handle(req);
 		assertNotNull(resp);
 		assertEquals(200, resp.getStatusCode());
 		assertTrue(resp.getContentLength() > 0);
@@ -270,19 +270,19 @@ public class UEB6Test extends AbstractTestFixture<UEB6> {
 	{
 		UEB6 ueb = createInstance();
 
-		Plugin obj = ueb.getNavigationPlugin();
+		IPlugin obj = ueb.getNavigationPlugin();
 		assertNotNull("UEB6.getNavigationPlugin returned null", obj);
 
 		String url = ueb.getNaviUrl();
 		assertNotNull("IUEB6.getNaviUrl returned null", url);
 		
-		Request req = ueb.getRequest(RequestHelper.getValidRequestStream(url, "POST", "street="));
+		IRequest req = ueb.getRequest(RequestHelper.getValidRequestStream(url, "POST", "street="));
 		assertNotNull("IUEB6.GetRequest returned null", req);
 
 		float canHandle = obj.canHandle(req);
 		assertTrue(canHandle > 0 && canHandle <= 1);
 
-		Response resp = obj.handle(req);
+		IResponse resp = obj.handle(req);
 		assertNotNull(resp);
 		assertEquals(200, resp.getStatusCode());
 		assertTrue(resp.getContentLength() > 0);
@@ -296,7 +296,7 @@ public class UEB6Test extends AbstractTestFixture<UEB6> {
 	{
 		UEB6 ueb = createInstance();
 
-		Plugin obj = ueb.getToLowerPlugin();
+		IPlugin obj = ueb.getToLowerPlugin();
 		assertNotNull("UEB6.getToLowerPlugin returned null", obj);
 	}
 
@@ -305,7 +305,7 @@ public class UEB6Test extends AbstractTestFixture<UEB6> {
 	{
 		UEB6 ueb = createInstance();
 
-		Plugin obj = ueb.getToLowerPlugin();
+		IPlugin obj = ueb.getToLowerPlugin();
 		assertNotNull("UEB6.getToLowerPlugin returned null", obj);
 
 		String url = ueb.getToLowerUrl();
@@ -317,7 +317,7 @@ public class UEB6Test extends AbstractTestFixture<UEB6> {
 	{
 		UEB6 ueb = createInstance();
 
-		Plugin obj = ueb.getToLowerPlugin();
+		IPlugin obj = ueb.getToLowerPlugin();
 		assertNotNull("UEB6.getToLowerPlugin returned null", obj);
 
 		String url = ueb.getToLowerUrl();
@@ -325,13 +325,13 @@ public class UEB6Test extends AbstractTestFixture<UEB6> {
 		
         String textToTest = String.format("Hello - WorlD! %s", UUID.randomUUID());
 
-		Request req = ueb.getRequest(RequestHelper.getValidRequestStream(url, "POST", String.format("text=%s",  textToTest)));
+		IRequest req = ueb.getRequest(RequestHelper.getValidRequestStream(url, "POST", String.format("text=%s",  textToTest)));
 		assertNotNull("IUEB6.GetRequest returned null", req);
 
 		float canHandle = obj.canHandle(req);
 		assertTrue(canHandle > 0 && canHandle <= 1);
 
-		Response resp = obj.handle(req);
+		IResponse resp = obj.handle(req);
 		assertNotNull(resp);
 		assertEquals(200, resp.getStatusCode());
 		assertTrue(resp.getContentLength() > 0);
@@ -346,19 +346,19 @@ public class UEB6Test extends AbstractTestFixture<UEB6> {
 	{
 		UEB6 ueb = createInstance();
 
-		Plugin obj = ueb.getToLowerPlugin();
+		IPlugin obj = ueb.getToLowerPlugin();
 		assertNotNull("UEB6.getToLowerPlugin returned null", obj);
 
 		String url = ueb.getToLowerUrl();
 		assertNotNull("IUEB6.getToLowerUrl returned null", url);
 		
-		Request req = ueb.getRequest(RequestHelper.getValidRequestStream(url, "POST", "text="));
+		IRequest req = ueb.getRequest(RequestHelper.getValidRequestStream(url, "POST", "text="));
 		assertNotNull("IUEB6.GetRequest returned null", req);
 
 		float canHandle = obj.canHandle(req);
 		assertTrue(canHandle > 0 && canHandle <= 1);
 
-		Response resp = obj.handle(req);
+		IResponse resp = obj.handle(req);
 		assertNotNull(resp);
 		assertEquals(200, resp.getStatusCode());
 		assertTrue(resp.getContentLength() > 0);

@@ -2,12 +2,12 @@ package BIF.SWE1;
 
 import java.io.InputStream;
 
-import BIF.SWE1.Impl.PluginSystem.TestPlugin;
-import BIF.SWE1.Impl.httpUtils.HttpRequest;
-import BIF.SWE1.Impl.httpUtils.HttpResponse;
-import BIF.SWE1.interfaces.Plugin;
-import BIF.SWE1.interfaces.Request;
-import BIF.SWE1.interfaces.Response;
+import BIF.SWE1.imp.pluginSystem.TestPlugin;
+import BIF.SWE1.imp.httpUtils.HttpRequest;
+import BIF.SWE1.imp.httpUtils.HttpResponse;
+import BIF.SWE1.interfaces.IPlugin;
+import BIF.SWE1.interfaces.IRequest;
+import BIF.SWE1.interfaces.IResponse;
 
 public class UEB3 {
 
@@ -15,15 +15,15 @@ public class UEB3 {
 
 	}
 
-	public Request getRequest(InputStream inputStream) {
+	public IRequest getRequest(InputStream inputStream) {
 		return new HttpRequest(inputStream);
 	}
 
-	public Response getResponse() {
+	public IResponse getResponse() {
 		return new HttpResponse();
 	}
 
-	public Plugin getTestPlugin() {
+	public IPlugin getTestPlugin() {
 		return new TestPlugin();
 	}
 }

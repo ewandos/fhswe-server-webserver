@@ -2,6 +2,7 @@ package BIF.SWE1.unittests;
 
 import static org.junit.Assert.*;
 
+import BIF.SWE1.imp.httpUtils.WebUrl;
 import org.junit.*;
 
 import BIF.SWE1.interfaces.Url;

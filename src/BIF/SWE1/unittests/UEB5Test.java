@@ -21,10 +21,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import BIF.SWE1.interfaces.Plugin;
-import BIF.SWE1.interfaces.PluginManager;
-import BIF.SWE1.interfaces.Request;
-import BIF.SWE1.interfaces.Response;
+import BIF.SWE1.interfaces.IPlugin;
+import BIF.SWE1.interfaces.IPluginManager;
+import BIF.SWE1.interfaces.IRequest;
+import BIF.SWE1.interfaces.IResponse;
 import BIF.SWE1.UEB5;
 
 /* Placeholder */
@@ -59,10 +59,10 @@ public class UEB5Test extends AbstractTestFixture<UEB5> {
 
 	/********************* Helper **********************/
 
-	private Plugin selectPlugin(PluginManager mgr, Request req) {
-		Plugin plugin = null;
+	private IPlugin selectPlugin(IPluginManager mgr, IRequest req) {
+		IPlugin plugin = null;
 		float max = 0;
-		for (Plugin p : mgr.getPlugins()) {
+		for (IPlugin p : mgr.getPlugins()) {
 			float canHandle = p.canHandle(req);
 			if (canHandle > max) {
 				max = canHandle;
@@ -85,16 +85,16 @@ public class UEB5Test extends AbstractTestFixture<UEB5> {
 	public void milestone2_return_main_page() throws Exception {
 		UEB5 ueb = createInstance();
 
-		PluginManager mgr = ueb.getPluginManager();
+		IPluginManager mgr = ueb.getPluginManager();
 		assertNotNull("UEB5.getPluginManager returned null", mgr);
 
-		Request req = ueb.getRequest(RequestHelper.getValidRequestStream("/"));
+		IRequest req = ueb.getRequest(RequestHelper.getValidRequestStream("/"));
 		assertNotNull("UEB5.GetRequest returned null", req);
 
-		Plugin plugin = selectPlugin(mgr, req);
+		IPlugin plugin = selectPlugin(mgr, req);
 		assertNotNull("No plugin found to server the '/' request", plugin);
 
-		Response resp = plugin.handle(req);
+		IResponse resp = plugin.handle(req);
 		assertNotNull(resp);
 		assertEquals(200, resp.getStatusCode());
 		assertTrue(resp.getContentLength() > 0);
@@ -111,16 +111,16 @@ public class UEB5Test extends AbstractTestFixture<UEB5> {
 	public void milestone2_return_error_on_invalid_url() throws Exception {
 		UEB5 ueb = createInstance();
 
-		PluginManager mgr = ueb.getPluginManager();
+		IPluginManager mgr = ueb.getPluginManager();
 		assertNotNull("UEB5.getPluginManager returned null", mgr);
 
-		Request req = ueb.getRequest(RequestHelper.getValidRequestStream("/i_am_a_unknown_url.html"));
+		IRequest req = ueb.getRequest(RequestHelper.getValidRequestStream("/i_am_a_unknown_url.html"));
 		assertNotNull("UEB5.GetRequest returned null", req);
 
-		Plugin plugin = selectPlugin(mgr, req);
+		IPlugin plugin = selectPlugin(mgr, req);
 
 		if (plugin != null) {
-			Response resp = plugin.handle(req);
+			IResponse resp = plugin.handle(req);
 			assertNotNull(resp);
 			assertTrue(resp.getStatusCode() != 200);
 		} else {
@@ -131,11 +131,11 @@ public class UEB5Test extends AbstractTestFixture<UEB5> {
 	/********************** PluginManager *********************************/
 	@Test
 	public void pluginmanager_return_all_plugins() {
-		PluginManager obj = createInstance().getPluginManager();
+		IPluginManager obj = createInstance().getPluginManager();
 		assertNotNull("UEB5.GetPluginManager returned null", obj);
 		assertNotNull(obj.getPlugins());
 		int count = 0;
-		Iterator<Plugin> i = obj.getPlugins().iterator();
+		Iterator<IPlugin> i = obj.getPlugins().iterator();
 		while (i.hasNext()) {
 			count++;
 			i.next();
@@ -146,11 +146,11 @@ public class UEB5Test extends AbstractTestFixture<UEB5> {
 	@Test
 	@SuppressWarnings("rawtypes")
 	public void pluginmanager_all_plugins_have_unique_type() {
-		PluginManager obj = createInstance().getPluginManager();
+		IPluginManager obj = createInstance().getPluginManager();
 		assertNotNull("UEB5.GetPluginManager returned null", obj);
 		assertNotNull(obj.getPlugins());
 		Set<Class> _typeMap = new HashSet<Class>();
-		for (Plugin p : obj.getPlugins()) {
+		for (IPlugin p : obj.getPlugins()) {
 			assertNotNull(p);
 			Class t = p.getClass();
 			assertFalse(_typeMap.contains(t));
@@ -161,15 +161,15 @@ public class UEB5Test extends AbstractTestFixture<UEB5> {
 	@Test
 	public void pluginmanager_contains_plugin_for_start_page() throws Exception {
 		UEB5 ueb = createInstance();
-		PluginManager obj = ueb.getPluginManager();
+		IPluginManager obj = ueb.getPluginManager();
 		assertNotNull("UEB5.GetPluginManager returned null", obj);
-		Request req = ueb.getRequest(RequestHelper.getValidRequestStream("/"));
+		IRequest req = ueb.getRequest(RequestHelper.getValidRequestStream("/"));
 		assertNotNull("UEB5.GetRequest returned null", req);
 
 		assertNotNull(obj.getPlugins());
-		Plugin plugin = selectPlugin(obj, req);
+		IPlugin plugin = selectPlugin(obj, req);
 		assertNotNull(plugin);
-		Response resp = plugin.handle(req);
+		IResponse resp = plugin.handle(req);
 		assertNotNull(resp);
 		assertEquals(200, resp.getStatusCode());
 		assertTrue(resp.getContentLength() > 0);
@@ -177,14 +177,14 @@ public class UEB5Test extends AbstractTestFixture<UEB5> {
 
 	@Test
 	public void pluginmanager_should_add_plugin() throws InstantiationException, IllegalAccessException, ClassNotFoundException {
-		PluginManager obj = createInstance().getPluginManager();
+		IPluginManager obj = createInstance().getPluginManager();
 		assertNotNull("UEB5.GetPluginManager returned null", obj);
 		assertNotNull(obj.getPlugins());
 		long count = StreamSupport.stream(obj.getPlugins().spliterator(), false).count();
 		obj.add("BIF.BIF.SWE1.unittests.mocks.Ueb5TestPlugin");
 		assertEquals(count + 1, StreamSupport.stream(obj.getPlugins().spliterator(), false).count());
 		boolean found = false;
-		for (Plugin p : obj.getPlugins()) {
+		for (IPlugin p : obj.getPlugins()) {
 			if (p instanceof BIF.SWE1.unittests.mocks.Ueb5TestPlugin)
 				found = true;
 		}
@@ -194,7 +194,7 @@ public class UEB5Test extends AbstractTestFixture<UEB5> {
 
 	@Test
 	public void pluginmanager_should_fail_adding_non_existing_plugin() throws InstantiationException, IllegalAccessException, ClassNotFoundException {
-		PluginManager obj = createInstance().getPluginManager();
+		IPluginManager obj = createInstance().getPluginManager();
 		assertNotNull("UEB5.GetPluginManager returned null", obj);
 		assertNotNull(obj.getPlugins());
 		boolean thrown = false;
@@ -208,7 +208,7 @@ public class UEB5Test extends AbstractTestFixture<UEB5> {
 	
 	@Test
 	public void pluginmanager_should_fail_adding_plugin_not_implementing_plugin() throws InstantiationException, IllegalAccessException, ClassNotFoundException {
-		PluginManager obj = createInstance().getPluginManager();
+		IPluginManager obj = createInstance().getPluginManager();
 		assertNotNull("UEB5.GetPluginManager returned null", obj);
 		assertNotNull(obj.getPlugins());
 		boolean thrown = false;
@@ -242,7 +242,7 @@ public class UEB5Test extends AbstractTestFixture<UEB5> {
 		UEB5 ueb = createInstance();
 		setupStaticFilePlugin(ueb, "foo.txt");
 
-		Plugin obj = ueb.getStaticFilePlugin();
+		IPlugin obj = ueb.getStaticFilePlugin();
 		assertNotNull("UEB5.getStaticFilePlugin returned null", obj);
 
 		String url = ueb.getStaticFileUrl("bar.txt");
@@ -256,19 +256,19 @@ public class UEB5Test extends AbstractTestFixture<UEB5> {
 		UEB5 ueb = createInstance();
 		setupStaticFilePlugin(ueb, fileName);
 
-		Plugin obj = ueb.getStaticFilePlugin();
+		IPlugin obj = ueb.getStaticFilePlugin();
 		assertNotNull("UEB5.getStaticFilePlugin returned null", obj);
 
 		String url = ueb.getStaticFileUrl(fileName);
 		assertNotNull("IUEB5.GetStaticFileUrl returned null", url);
 
-		Request req = ueb.getRequest(RequestHelper.getValidRequestStream(url));
+		IRequest req = ueb.getRequest(RequestHelper.getValidRequestStream(url));
 		assertNotNull("UEB5.GetRequest returned null", req);
 
 		float canHandle = obj.canHandle(req);
 		assertTrue(canHandle > 0 && canHandle <= 1);
 
-		Response resp = obj.handle(req);
+		IResponse resp = obj.handle(req);
 		assertNotNull(resp);
 		assertEquals(200, resp.getStatusCode());
 	}
@@ -279,19 +279,19 @@ public class UEB5Test extends AbstractTestFixture<UEB5> {
 		UEB5 ueb = createInstance();
 		setupStaticFilePlugin(ueb, fileName);
 
-		Plugin obj = ueb.getStaticFilePlugin();
+		IPlugin obj = ueb.getStaticFilePlugin();
 		assertNotNull("UEB5.getStaticFilePlugin returned null", obj);
 
 		String url = ueb.getStaticFileUrl(fileName);
 		assertNotNull("IUEB5.GetStaticFileUrl returned null", url);
 
-		Request req = ueb.getRequest(RequestHelper.getValidRequestStream(url));
+		IRequest req = ueb.getRequest(RequestHelper.getValidRequestStream(url));
 		assertNotNull("UEB5.GetRequest returned null", req);
 
 		float canHandle = obj.canHandle(req);
 		assertTrue(canHandle > 0 && canHandle <= 1);
 
-		Response resp = obj.handle(req);
+		IResponse resp = obj.handle(req);
 		assertNotNull(resp);
 		assertEquals(200, resp.getStatusCode());
 		assertEquals(static_file_content.length(), resp.getContentLength());
@@ -318,19 +318,19 @@ public class UEB5Test extends AbstractTestFixture<UEB5> {
 		UEB5 ueb = createInstance();
 		setupStaticFilePlugin(ueb, fileName);
 
-		Plugin obj = ueb.getStaticFilePlugin();
+		IPlugin obj = ueb.getStaticFilePlugin();
 		assertNotNull("UEB5.getStaticFilePlugin returned null", obj);
 
 		String url = ueb.getStaticFileUrl("missing-" + fileName);
 		assertNotNull("IUEB5.GetStaticFileUrl returned null", url);
 
-		Request req = ueb.getRequest(RequestHelper.getValidRequestStream(url));
+		IRequest req = ueb.getRequest(RequestHelper.getValidRequestStream(url));
 		assertNotNull("UEB5.GetRequest returned null", req);
 
 		float canHandle = obj.canHandle(req);
 		if (canHandle > 0) {
 
-			Response resp = obj.handle(req);
+			IResponse resp = obj.handle(req);
 			assertNotNull(resp);
 			assertEquals(404, resp.getStatusCode());
 		} else {
