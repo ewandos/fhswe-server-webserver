@@ -1,4 +1,4 @@
-package BIF.SWE1.imp.httpUtils;
+package BIF.SWE1.httpUtils;
 
 import BIF.SWE1.interfaces.IUrl;
 

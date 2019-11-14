@@ -1,8 +1,9 @@
-package BIF.SWE1.imp.pluginSystem;
+package BIF.SWE1.plugins;
 
-import BIF.SWE1.imp.httpUtils.ResponseFactory;
+import BIF.SWE1.httpUtils.ResponseFactory;
 import BIF.SWE1.interfaces.IRequest;
 import BIF.SWE1.interfaces.IResponse;
+import BIF.SWE1.pluginSystem.DynamicPlugin;
 
 public class TestPlugin extends DynamicPlugin {
     public TestPlugin() {

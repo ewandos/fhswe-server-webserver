@@ -1,4 +1,4 @@
-package BIF.SWE1.imp.pluginSystem;
+package BIF.SWE1.plugins;
 
 import BIF.SWE1.interfaces.IPlugin;
 import BIF.SWE1.interfaces.IRequest;

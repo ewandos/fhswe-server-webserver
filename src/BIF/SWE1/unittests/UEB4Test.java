@@ -220,7 +220,7 @@ public class UEB4Test extends AbstractTestFixture<UEB4> {
 		IPluginManager obj = createInstance().getPluginManager();
 		assertNotNull("UEB4.GetPluginManager returned null", obj);
 		assertNotNull(obj.getPlugins());
-		long count = StreamSupport.stream(obj.getPlugins().spliterator(), false).count();			
+		long count = StreamSupport.stream(obj.getPlugins().spliterator(), false).count();
         IPlugin myPlugin = new IPlugin() {
 
 			@Override

@@ -1,6 +1,6 @@
-package BIF.SWE1.imp.pluginSystem;
+package BIF.SWE1.pluginSystem;
 
-import BIF.SWE1.imp.httpUtils.ResponseFactory;
+import BIF.SWE1.httpUtils.ResponseFactory;
 import BIF.SWE1.interfaces.IPlugin;
 import BIF.SWE1.interfaces.IRequest;
 import BIF.SWE1.interfaces.IResponse;
