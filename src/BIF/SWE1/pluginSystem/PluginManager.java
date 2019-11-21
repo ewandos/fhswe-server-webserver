@@ -10,7 +10,7 @@ import java.util.*;
 
 
 public class PluginManager implements IPluginManager {
-    public List<IPlugin> mountedPlugins = new ArrayList<IPlugin>();
+    private List<IPlugin> mountedPlugins = new ArrayList<IPlugin>();
     private List<String> namesOfStagedPlugins;
 
     // TODO: currently it's not possible to instantiate Class-Files from outside the package-files!
@@ -28,18 +28,22 @@ public class PluginManager implements IPluginManager {
         List<String> foundPlugins = new ArrayList<String>();
         String[] pluginNames = directory.list(filter);
         if (pluginNames == null) {
-            System.out.println("No plugins found!");
+            System.out.println("WARNING: No plugins found!");
             return null;
         } else {
             for (String name : pluginNames) {
                 name = name.substring(0, name.indexOf("."));
                 foundPlugins.add(name);
             }
-            System.out.println("Mounted Plugins: " + foundPlugins);
             return foundPlugins;
         }
     }
 
+    /**
+     * Interates through the mounted plugins and evaluates which one can handle the HTTP-Request best.
+     * @param request A HTTP-Request
+     * @return Plugin that is best at handling the request.
+     */
     public IPlugin getBestHandlePlugin(IRequest request) {
         float maxHandleValue = 0.0f;
         IPlugin suitablePlugin = null;
@@ -52,6 +56,15 @@ public class PluginManager implements IPluginManager {
             }
         }
         return suitablePlugin;
+    }
+
+    /**
+     * Goes through all staged plugins and mounts them.
+     */
+    public void mountAllPlugins() {
+        for (String pluginName: namesOfStagedPlugins) {
+            add(pluginName);
+        }
     }
 
     @Override

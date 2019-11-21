@@ -21,7 +21,7 @@ public class DynamicPlugin implements IPlugin {
     @Override
     public float canHandle(IRequest req) {
         // create regexp pattern
-        String pattern ="(\\/"+ identifier + "\\/.*)|(\\/.*\\?" + identifier + "_plugin=true)";
+        String pattern ="(\\/"+ identifier + "\\/.*)|(\\/.*\\?" + identifier + "Plugin=true)";
         Pattern REGEXP = Pattern.compile(pattern, Pattern.MULTILINE);
 
         // get requestedPlugin
