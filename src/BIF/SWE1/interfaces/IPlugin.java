@@ -1,6 +1,7 @@
 package BIF.SWE1.interfaces;
 
 public interface IPlugin {
+
 	/**
 	 * Returns a score between 0 and 1 to indicate that the plugin is willing to
 	 * handle the request. The plugin with the highest score will execute the

@@ -7,7 +7,7 @@ import BIF.SWE1.pluginSystem.DynamicPlugin;
 
 public class TestPlugin extends DynamicPlugin {
     public TestPlugin() {
-        this.identifier = "test";
+        identifier = "test";
     }
 
     @Override

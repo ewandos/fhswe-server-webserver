@@ -41,7 +41,7 @@ public class Request implements IRequest {
         if (regexp.matches()) {
             method = line.trim().substring(0, line.indexOf("/")).toUpperCase();
             url = new Url(line.trim().substring(line.indexOf("/"), line.lastIndexOf(" ")));
-            System.out.println("Received a valid request!");
+            //System.out.println("Received a valid request!");
         } else {
             System.out.println(line);
             throw new Exception("RegExp doesn't match!");

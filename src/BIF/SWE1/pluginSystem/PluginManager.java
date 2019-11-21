@@ -2,6 +2,7 @@ package BIF.SWE1.pluginSystem;
 
 import BIF.SWE1.interfaces.IPlugin;
 import BIF.SWE1.interfaces.IPluginManager;
+import BIF.SWE1.interfaces.IRequest;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -9,9 +10,10 @@ import java.util.*;
 
 
 public class PluginManager implements IPluginManager {
-    private List<IPlugin> mountedPlugins = new ArrayList<IPlugin>();
+    public List<IPlugin> mountedPlugins = new ArrayList<IPlugin>();
     private List<String> namesOfStagedPlugins;
 
+    // TODO: currently it's not possible to instantiate Class-Files from outside the package-files!
     private static String pack = "BIF.SWE1.plugins.";
     private static String nameSuffix = "Plugin.java";
 
@@ -33,9 +35,23 @@ public class PluginManager implements IPluginManager {
                 name = name.substring(0, name.indexOf("."));
                 foundPlugins.add(name);
             }
-            System.out.println(foundPlugins);
+            System.out.println("Mounted Plugins: " + foundPlugins);
             return foundPlugins;
         }
+    }
+
+    public IPlugin getBestHandlePlugin(IRequest request) {
+        float maxHandleValue = 0.0f;
+        IPlugin suitablePlugin = null;
+        for(IPlugin plugin : mountedPlugins)
+        {
+            float handleValue = plugin.canHandle(request);
+            if (handleValue >= maxHandleValue) {
+                maxHandleValue = handleValue;
+                suitablePlugin = plugin;
+            }
+        }
+        return suitablePlugin;
     }
 
     @Override
@@ -50,11 +66,12 @@ public class PluginManager implements IPluginManager {
 
     @Override
     public void add(String plugin) {
+        // check if searched plugin is available
+        // TODO: currently case-sensitive
         if (namesOfStagedPlugins.contains(plugin)) {
             PluginLoader loader = new PluginLoader();
             try {
                 Class cl = loader.findClass(pack + plugin);
-                System.out.println(cl);
                 Object object = cl.getDeclaredConstructor().newInstance();
                 mountedPlugins.add((IPlugin) object);
             } catch (Exception e) {

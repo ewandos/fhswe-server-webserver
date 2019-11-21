@@ -1,10 +1,5 @@
 package BIF.SWE1;
-import BIF.SWE1.interfaces.IPlugin;
-import BIF.SWE1.pluginSystem.PluginLoader;
-import BIF.SWE1.pluginSystem.PluginManager;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.net.ServerSocket;
 
 public class Main {
     /**
@@ -12,12 +7,6 @@ public class Main {
      * @param args No parameters are needed.
      */
     public static void main(String[] args) {
-        PluginManager pl = new PluginManager();
-        pl.add("TestPlugin");
-        pl.add("StaticPlugin");
-        System.out.println("Ready");
-
-        /* S E R V E R
         try {
             System.out.println("Listening for connection on port 8080 ....");
             ServerSocket listener = new ServerSocket(8080);
@@ -28,6 +17,5 @@ public class Main {
         } catch (Exception e) {
             e.printStackTrace();
         }
-         */
     }
 }
