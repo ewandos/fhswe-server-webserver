@@ -4,7 +4,6 @@ import BIF.SWE1.interfaces.IResponse;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,6 +11,7 @@ public class Response implements IResponse {
     private int statusCode;
     private Map<String, String> headers = new HashMap<String, String>();
     private StringBuilder content = new StringBuilder();
+    private ByteArrayOutputStream contentBytes = new ByteArrayOutputStream();
     private String contentType = "text/plain";
     private String serverHeader = "BIF-BIF.SWE1-Server";
 
@@ -19,7 +19,7 @@ public class Response implements IResponse {
      * Takes the response line, general headers, custom headers and content and concat them
      * @return Entire httpResponse, ready for sending
      */
-    private String buildResponse() {
+    private byte[] buildResponse(){
         // append general headers to string
         StringBuilder head = new StringBuilder();
         head.append("HTTP/1.1 ").append(getStatus()).append("\r\n");
@@ -32,10 +32,16 @@ public class Response implements IResponse {
             head.append(entry.getKey()).append(": ").append(entry.getValue()).append("\r\n");
         head.append("\r\n");
 
-        // concat responseHead and content
-        String httpResponse = head.toString() + content.toString();
+        //
+        ByteArrayOutputStream httpResponseBytes = new ByteArrayOutputStream();
+        try {
+            httpResponseBytes.write(head.toString().getBytes(StandardCharsets.UTF_8));
+            httpResponseBytes.write(contentBytes.toByteArray());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        return httpResponse;
+        return httpResponseBytes.toByteArray();
     }
 
     @Override
@@ -45,7 +51,8 @@ public class Response implements IResponse {
 
     @Override
     public int getContentLength() {
-        return content.toString().getBytes(StandardCharsets.UTF_8).length;
+        //return content.toString().getBytes(StandardCharsets.UTF_8).length;
+        return contentBytes.size();
     }
 
     @Override
@@ -102,41 +109,42 @@ public class Response implements IResponse {
 
     @Override
     public void setContent(String content) {
-        this.content.append(content);
+        try {
+            byte[] bytes = content.getBytes(StandardCharsets.UTF_8);
+            contentBytes.write(bytes);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            this.content.append(content);
+        }
     }
 
     @Override
     public void setContent(byte[] content) {
-        this.content.append(Arrays.toString(content));
+        try {
+            contentBytes.write(content);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void setContent(InputStream stream) {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-        String line;
         try {
-            while((line = reader.readLine()) != null) {
-                content.append(line);
-            }
-        } catch(Exception e) {
-            System.out.println(e.getMessage());
+            contentBytes.write(stream.read());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
     @Override
     public void send(OutputStream network) {
-        /* Valid for the UnitTest, but throws Error at every other test, which tries to send no content*/
         if (this.getContentType() != null && this.getContentLength() <= 0)
             throw new IllegalStateException("Trying to send response without content while content type set!");
 
-
-        String httpResponse = buildResponse();
-
+         byte[] httpResponseBytes = buildResponse();
         try {
-            OutputStreamWriter osw = new OutputStreamWriter(network);
-            BufferedWriter bw = new BufferedWriter(osw);
-            bw.write(httpResponse);
-            bw.flush();
+            network.write(httpResponseBytes);
+            network.flush();
         } catch(Exception e) {
             System.out.println(e.getMessage());
         }
