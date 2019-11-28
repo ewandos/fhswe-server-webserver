@@ -368,7 +368,7 @@ public class UEB3Test extends AbstractTestFixture<UEB3> {
 		UEB3 ueb = createInstance();
 		IPlugin obj = ueb.getTestPlugin();
 		assertNotNull("UEB3.GetTestPlugin returned null", obj);
-		IRequest req = ueb.getRequest(RequestHelper.getValidRequestStream("/foo.html?test_plugin=true"));
+		IRequest req = ueb.getRequest(RequestHelper.getValidRequestStream("/foo.html?testPlugin=true"));
 		assertNotNull("UEB3.GetTestPlugin returned null", req);
 		assertTrue(obj.canHandle(req) > 0);
 	}

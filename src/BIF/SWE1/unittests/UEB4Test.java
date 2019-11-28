@@ -6,8 +6,11 @@ import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.stream.StreamSupport;
 
+import BIF.SWE1.httpUtils.Request;
+import BIF.SWE1.httpUtils.Response;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -80,7 +83,7 @@ public class UEB4Test extends AbstractTestFixture<UEB4> {
 
 	@Test
 	public void request_should_return_post_content() throws Exception {
-		IRequest obj = createInstance().getRequest(RequestHelper.getValidRequestStream("/", "POST", "x=a&y=b"));
+		Request obj = createInstance().getRequest(RequestHelper.getValidRequestStream("/", "POST", "x=a&y=b"));
 		assertNotNull("UEB4.GetRequest returned null", obj);
 		assertTrue(obj.isValid());
 		assertEquals("POST", obj.getMethod());
@@ -109,16 +112,16 @@ public class UEB4Test extends AbstractTestFixture<UEB4> {
 		assertEquals("POST", obj.getMethod());
 		assertNotNull(obj.getContentBytes());
 		assertEquals(7, obj.getContentBytes().length);
-		String body = new String(obj.getContentBytes(), 0, 7, "UTF-8");
+		String body = new String(obj.getContentBytes(), 0, 7, StandardCharsets.UTF_8);
 		assertEquals("x=a&y=b", body);
 	}
 
 	/********************** Response *********************************/
 	@Test
 	public void response_should_send_byte_content() throws Exception {
-		IResponse obj = createInstance().getResponse();
+		Response obj = createInstance().getResponse();
 		assertNotNull("UEB4.GetResponse returned null", obj);
-		byte[] content = String.format("Hello World, my GUID is %s! Ignore UTF-8 chars!", java.util.UUID.randomUUID()).getBytes("UTF-8");
+		byte[] content = String.format("Hello World, my GUID is %s! Ignore UTF-8 chars!", java.util.UUID.randomUUID()).getBytes(StandardCharsets.UTF_8);
 		obj.setContent(content);
 		obj.setStatusCode(200);
 
@@ -126,7 +129,7 @@ public class UEB4Test extends AbstractTestFixture<UEB4> {
 		try {
 			obj.send(ms);
 			assertTrue(ms.size() > 0);
-			BufferedReader sr = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(ms.toByteArray()), "ASCII"));
+			BufferedReader sr = new BufferedReader(new InputStreamReader(new ByteArrayInputStream(ms.toByteArray()), StandardCharsets.US_ASCII));
 			boolean header_end_found = false;
 			for (int i = 0; i < 1000; i++) {
 				String line = sr.readLine();
