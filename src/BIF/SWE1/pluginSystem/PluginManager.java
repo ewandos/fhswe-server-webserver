@@ -50,7 +50,7 @@ public class PluginManager implements IPluginManager {
         for(IPlugin plugin : mountedPlugins)
         {
             float handleValue = plugin.canHandle(request);
-            if (handleValue >= maxHandleValue) {
+            if (handleValue > maxHandleValue) {
                 maxHandleValue = handleValue;
                 suitablePlugin = plugin;
             }
@@ -69,6 +69,8 @@ public class PluginManager implements IPluginManager {
 
     @Override
     public List<IPlugin> getPlugins() {
+        gatherPlugins();
+        mountAllPlugins();
         return mountedPlugins;
     }
 

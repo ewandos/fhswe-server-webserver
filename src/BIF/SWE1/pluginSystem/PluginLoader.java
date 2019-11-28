@@ -1,8 +1,5 @@
 package BIF.SWE1.pluginSystem;
 
-import BIF.SWE1.interfaces.IPlugin;
-import com.sun.source.util.Plugin;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
