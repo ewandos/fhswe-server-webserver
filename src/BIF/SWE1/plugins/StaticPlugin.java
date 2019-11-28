@@ -17,7 +17,8 @@ public class StaticPlugin implements IPlugin {
         // if it can find the file to the requested path, it returns a 0.5, otherwise a 0.0
         String path = req.getUrl().getPath();
         System.out.println("searched path: " + path);
-        File file = new File(path);
+        File file = new File("." + path);
+
         if(file.isFile() || path.equals(File.separator)) {
             return 0.5f;
         } else {
@@ -31,6 +32,8 @@ public class StaticPlugin implements IPlugin {
         String path = req.getUrl().getPath();
         if (path.equals(File.separator))
             path = "index.html";
+        else
+            path = "." + path;
 
         // This will reference one line at a time
         String line = null;
