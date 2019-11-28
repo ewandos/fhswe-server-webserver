@@ -14,3 +14,7 @@
 24.10. - 100min - Implementation of Request & Response<br>
 27.10. - 120min - Implementation of Request & Response<br>
 06.11. - 90min - Created canHandle() Systen, BugFixes, Documentation<br>
+14.11. - 80min - PluginManager Research<br>
+15.11. - 100min - PluginManager Implementation<br>
+22.11. - 40min - StaticPlugin<br>
+28.11. - 120min - Refactored Request & Response, StaticPlugin<br>
