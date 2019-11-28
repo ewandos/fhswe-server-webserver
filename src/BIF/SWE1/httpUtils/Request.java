@@ -4,12 +4,16 @@ import BIF.SWE1.interfaces.IRequest;
 import BIF.SWE1.interfaces.IUrl;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+// TODO: Refactor to https://stackoverflow.com/questions/5923817/how-to-clone-an-inputstream
 
 /**
  * httpRequest takes an InputStream containing a HTTP Request validates it by RegExp and gathers all segments
@@ -147,7 +151,7 @@ public class Request implements IRequest {
 
     @Override
     public InputStream getContentStream() {
-        return null;
+        return new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8));
     }
 
     @Override
@@ -157,6 +161,6 @@ public class Request implements IRequest {
 
     @Override
     public byte[] getContentBytes() {
-        return new byte[0];
+        return new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8)).readAllBytes();
     }
 }
