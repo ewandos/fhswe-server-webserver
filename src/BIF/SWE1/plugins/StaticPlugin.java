@@ -15,11 +15,11 @@ public class StaticPlugin implements IPlugin {
     @Override
     public float canHandle(IRequest req) {
         // if it can find the file to the requested path, it returns a 0.5, otherwise a 0.0
-        String path = req.getUrl().getPath();
-        System.out.println("searched path: " + path);
-        File file = new File("." + path);
+        String path = req.getUrl().getPath().substring(1);
+        System.out.println("searched path: ./" + path);
+        File file = new File(path);
 
-        if(file.isFile() || path.equals(File.separator)) {
+        if(file.isFile() || path.isEmpty()) {
             return 0.5f;
         } else {
             return 0.0f;
@@ -29,13 +29,13 @@ public class StaticPlugin implements IPlugin {
     @Override
     public IResponse handle(IRequest req) {
         // The name of the file to open.
-        String path = req.getUrl().getPath();
-        if (path.equals(File.separator))
-            path = "index.html";
-        else
-            path = "." + path;
+        String path = req.getUrl().getPath().substring(1);
 
-        // This will reference one line at a time
+        // if root-directory is requested load the index.html
+        if (path.isEmpty())
+            path = "index.html";
+
+        // reference one line at a time
         String line = null;
         StringBuilder builder = new StringBuilder();
 
@@ -50,7 +50,6 @@ public class StaticPlugin implements IPlugin {
                 builder.append(line);
             }
 
-            // Always close files.
             bufferedReader.close();
         }
         catch(FileNotFoundException ex) {
