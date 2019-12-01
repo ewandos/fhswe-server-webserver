@@ -13,8 +13,6 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-// TODO: Refactor to https://stackoverflow.com/questions/5923817/how-to-clone-an-inputstream
-
 /**
  * httpRequest takes an InputStream containing a HTTP Request validates it by RegExp and gathers all segments
  */

@@ -28,7 +28,6 @@ public class Session implements Runnable{
         try{
             // create new PluginManager to mount every plugin
             PluginManager plManager = new PluginManager();
-            plManager.mountAllPlugins();
             System.out.println("LOG: plugins ready");
 
             // get HTTP-Request by InputStream of the clientSocket

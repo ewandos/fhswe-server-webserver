@@ -11,6 +11,7 @@ import java.util.stream.StreamSupport;
 
 import BIF.SWE1.httpUtils.Request;
 import BIF.SWE1.httpUtils.Response;
+import BIF.SWE1.pluginSystem.PluginManager;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -189,20 +190,20 @@ public class UEB4Test extends AbstractTestFixture<UEB4> {
 	/********************** PluginManager *********************************/
 	@Test
 	public void pluginmanager_hello_world() {
-		IPluginManager obj = createInstance().getPluginManager();
+		PluginManager obj = createInstance().getPluginManager();
 		assertNotNull("UEB4.GetPluginManager returned null", obj);
 	}
 
 	@Test
 	public void pluginmanager_returns_plugins() {
-		IPluginManager obj = createInstance().getPluginManager();
+		PluginManager obj = createInstance().getPluginManager();
 		assertNotNull("UEB4.GetPluginManager returned null", obj);
 		assertNotNull(obj.getPlugins());
 	}
 
 	@Test
 	public void pluginmanager_returns_1_plugin() {
-		IPluginManager obj = createInstance().getPluginManager();
+		PluginManager obj = createInstance().getPluginManager();
 		assertNotNull("UEB4.GetPluginManager returned null", obj);
 		assertNotNull(obj.getPlugins());
 		assertTrue(obj.getPlugins().iterator().hasNext());
@@ -210,7 +211,7 @@ public class UEB4Test extends AbstractTestFixture<UEB4> {
 
 	@Test
 	public void pluginmanager_plugins_are_not_null() {
-		IPluginManager obj = createInstance().getPluginManager();
+		PluginManager obj = createInstance().getPluginManager();
 		assertNotNull("UEB4.GetPluginManager returned null", obj);
 		assertNotNull(obj.getPlugins());
 		for (IPlugin p : obj.getPlugins()) {
@@ -220,10 +221,10 @@ public class UEB4Test extends AbstractTestFixture<UEB4> {
 	
 	@Test
 	public void pluginmanager_should_add_plugin() {
-		IPluginManager obj = createInstance().getPluginManager();
+		PluginManager obj = createInstance().getPluginManager();
 		assertNotNull("UEB4.GetPluginManager returned null", obj);
 		assertNotNull(obj.getPlugins());
-		long count = StreamSupport.stream(obj.getPlugins().spliterator(), false).count();
+		int count = obj.getPluginCount();
         IPlugin myPlugin = new IPlugin() {
 
 			@Override
@@ -238,7 +239,7 @@ public class UEB4Test extends AbstractTestFixture<UEB4> {
         	
         };
         obj.add(myPlugin);
-        assertEquals(count + 1, StreamSupport.stream(obj.getPlugins().spliterator(), false).count());
+        assertEquals(count + 1, obj.getPluginCount());
         boolean found = false;
 		for (IPlugin p : obj.getPlugins()) {
 			if(p == myPlugin) found = true;
@@ -249,14 +250,14 @@ public class UEB4Test extends AbstractTestFixture<UEB4> {
 	
 	@Test
 	public void pluginmanager_should_clear_plugins() {
-		IPluginManager obj = createInstance().getPluginManager();
+		PluginManager obj = createInstance().getPluginManager();
 		assertNotNull("UEB4.GetPluginManager returned null", obj);
 		assertNotNull(obj.getPlugins());
 		
 		obj.clear();
 		
 		assertNotNull(obj.getPlugins());
-        assertEquals(0l, StreamSupport.stream(obj.getPlugins().spliterator(), false).count());
+        assertEquals(0, obj.getPluginCount());
 
 	}
 }

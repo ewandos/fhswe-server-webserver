@@ -130,7 +130,7 @@ public class Response implements IResponse {
     @Override
     public void setContent(InputStream stream) {
         try {
-            contentBytes.write(stream.read());
+            contentBytes.write(stream.readAllBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }

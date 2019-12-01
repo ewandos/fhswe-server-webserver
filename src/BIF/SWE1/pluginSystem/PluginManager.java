@@ -22,6 +22,7 @@ public class PluginManager implements IPluginManager {
 
     public PluginManager() {
         namesOfStagedPlugins = gatherPlugins();
+        mountAllPlugins();
     }
 
     private List<String> gatherPlugins() {
@@ -58,19 +59,18 @@ public class PluginManager implements IPluginManager {
         return suitablePlugin;
     }
 
-    /**
-     * Goes through all staged plugins and mounts them.
-     */
-    public void mountAllPlugins() {
+    private void mountAllPlugins() {
         for (String pluginName: namesOfStagedPlugins) {
             add(pluginName);
         }
     }
 
+    public int getPluginCount() {
+        return mountedPlugins.size();
+    }
+
     @Override
     public List<IPlugin> getPlugins() {
-        gatherPlugins();
-        mountAllPlugins();
         return mountedPlugins;
     }
 
