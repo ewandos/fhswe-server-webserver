@@ -58,3 +58,6 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 META-INF/MANIFEST.MF
 plugins/test_plugin.class
+
+#Test Files
+tmp-static-files/
