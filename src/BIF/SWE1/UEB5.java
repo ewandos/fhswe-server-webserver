@@ -2,9 +2,12 @@ package BIF.SWE1;
 
 import java.io.InputStream;
 
+import BIF.SWE1.httpUtils.Request;
 import BIF.SWE1.interfaces.IPlugin;
 import BIF.SWE1.interfaces.IPluginManager;
 import BIF.SWE1.interfaces.IRequest;
+import BIF.SWE1.pluginSystem.PluginManager;
+import BIF.SWE1.plugins.StaticPlugin;
 
 public class UEB5 {
 
@@ -13,15 +16,15 @@ public class UEB5 {
 	}
 
 	public IRequest getRequest(InputStream inputStream) {
-		return null;
+		return new Request(inputStream);
 	}
 
-	public IPluginManager getPluginManager() {
-		return null;
+	public PluginManager getPluginManager() {
+		return new PluginManager();
 	}
 
 	public IPlugin getStaticFilePlugin() {
-		return null;
+		return new StaticPlugin();
 	}
 
 	public void setStatiFileFolder(String s) {

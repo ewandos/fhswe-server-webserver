@@ -43,12 +43,6 @@ public class Session implements Runnable{
                 // get response-string of IPlugin and send it
                 plugin.handle(request).send(clientSocket.getOutputStream());
                 System.out.println("LOG: response send");
-            } else {
-                // send 404 Response
-                String mainPage = "<!DOCTYPE html>\n<html>\n<head>\n<title>SWE Webserver</title>\n\n</head>\n<body>\n\n<h1>404</h1>\n<p>No plugin or static file found.</p>";
-                Response response = ResponseFactory.create(404, "BIF-BIF.SWE1-Server", "text/html", mainPage);
-                response.send(clientSocket.getOutputStream());
-                System.out.println("LOG: 404 send");
             }
 
             clientSocket.close();

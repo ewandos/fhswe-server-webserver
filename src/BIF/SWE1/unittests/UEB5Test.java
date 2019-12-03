@@ -15,6 +15,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.StreamSupport;
 
+import BIF.SWE1.pluginSystem.PluginManager;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -123,8 +124,6 @@ public class UEB5Test extends AbstractTestFixture<UEB5> {
 			IResponse resp = plugin.handle(req);
 			assertNotNull(resp);
 			assertTrue(resp.getStatusCode() != 200);
-		} else {
-			// No plugin will handle unknown URL
 		}
 	}
 
@@ -140,7 +139,7 @@ public class UEB5Test extends AbstractTestFixture<UEB5> {
 			count++;
 			i.next();
 		}
-		assertTrue(count >= 4);
+		assertTrue(count >= 5);
 	}
 
 	@Test
@@ -177,12 +176,12 @@ public class UEB5Test extends AbstractTestFixture<UEB5> {
 
 	@Test
 	public void pluginmanager_should_add_plugin() throws InstantiationException, IllegalAccessException, ClassNotFoundException {
-		IPluginManager obj = createInstance().getPluginManager();
+		PluginManager obj = createInstance().getPluginManager();
 		assertNotNull("UEB5.GetPluginManager returned null", obj);
 		assertNotNull(obj.getPlugins());
-		long count = StreamSupport.stream(obj.getPlugins().spliterator(), false).count();
+		long count = obj.getPluginCount();
 		obj.add("BIF.BIF.SWE1.unittests.mocks.Ueb5TestPlugin");
-		assertEquals(count + 1, StreamSupport.stream(obj.getPlugins().spliterator(), false).count());
+		assertEquals(count + 1, obj.getPluginCount());
 		boolean found = false;
 		for (IPlugin p : obj.getPlugins()) {
 			if (p instanceof BIF.SWE1.unittests.mocks.Ueb5TestPlugin)
