@@ -139,7 +139,7 @@ public class UEB5Test extends AbstractTestFixture<UEB5> {
 			count++;
 			i.next();
 		}
-		assertTrue(count >= 5);
+		assertTrue(count >= 4);
 	}
 
 	@Test
@@ -179,15 +179,14 @@ public class UEB5Test extends AbstractTestFixture<UEB5> {
 		PluginManager obj = createInstance().getPluginManager();
 		assertNotNull("UEB5.GetPluginManager returned null", obj);
 		assertNotNull(obj.getPlugins());
-		long count = obj.getPluginCount();
-		obj.add("BIF.BIF.SWE1.unittests.mocks.Ueb5TestPlugin");
+		int count = obj.getPluginCount();
+		obj.add("TestPlugin");
 		assertEquals(count + 1, obj.getPluginCount());
 		boolean found = false;
 		for (IPlugin p : obj.getPlugins()) {
-			if (p instanceof BIF.SWE1.unittests.mocks.Ueb5TestPlugin)
+			if (p instanceof BIF.SWE1.plugins.TestPlugin)
 				found = true;
 		}
-
 		assertTrue("New plugin was not found.", found);
 	}
 
@@ -212,7 +211,7 @@ public class UEB5Test extends AbstractTestFixture<UEB5> {
 		assertNotNull(obj.getPlugins());
 		boolean thrown = false;
 		try {
-			obj.add("BIF.BIF.SWE1.unittests.mocks.Ueb5NoTestPlugin");
+			obj.add("Ueb5NoTestPlugin");
 		} catch (Exception e) {
 			thrown = true;
 		}
