@@ -61,3 +61,6 @@ plugins/test_plugin.class
 
 #Test Files
 tmp-static-files/
+
+#Private Files
+timeRecording.md
