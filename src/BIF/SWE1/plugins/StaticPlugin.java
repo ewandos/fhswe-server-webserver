@@ -60,9 +60,26 @@ public class StaticPlugin implements IPlugin {
             System.out.println("Error reading file '" + path + "'");
         }
 
+
         // the response is the content of the requested file
         String content = builder.toString();
-        Response response = ResponseFactory.create(200, "BIF-BIF.SWE1-Server", "text/html", content);
+        String fileType = path.substring(path.lastIndexOf("."));
+        Response response;
+
+        switch(fileType) {
+            case ".html":
+                response = ResponseFactory.create(200, "BIF-BIF.SWE1-Server", "text/html", content);
+                break;
+            case ".css":
+                response = ResponseFactory.create(200, "BIF-BIF.SWE1-Server", "text/css", content);
+                break;
+            case ".js":
+                response = ResponseFactory.create(200, "BIF-BIF.SWE1-Server", "text/javascript", content);
+                break;
+            default:
+                response = ResponseFactory.create(200, "BIF-BIF.SWE1-Server", "text/plain", content);
+                break;
+        }
         return response;
     }
 }
