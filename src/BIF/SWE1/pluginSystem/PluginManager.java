@@ -1,5 +1,6 @@
 package BIF.SWE1.pluginSystem;
 
+import BIF.SWE1.httpUtils.Response;
 import BIF.SWE1.interfaces.IPlugin;
 import BIF.SWE1.interfaces.IPluginManager;
 import BIF.SWE1.interfaces.IRequest;
@@ -22,7 +23,10 @@ public class PluginManager implements IPluginManager {
 
     public PluginManager() {
         namesOfStagedPlugins = gatherPlugins();
-        mountAllPlugins();
+        add("ErrorPlugin");
+        add("NaviPlugin");
+        add("StaticPlugin");
+        add("TemperaturePlugin");
     }
 
     private List<String> gatherPlugins() {
@@ -59,12 +63,6 @@ public class PluginManager implements IPluginManager {
         return suitablePlugin;
     }
 
-    private void mountAllPlugins() {
-        for (String pluginName: namesOfStagedPlugins) {
-            add(pluginName);
-        }
-    }
-
     public int getPluginCount() {
         return mountedPlugins.size();
     }
@@ -84,16 +82,16 @@ public class PluginManager implements IPluginManager {
         // check if searched plugin is available
         // TODO: currently case-sensitive
         if (namesOfStagedPlugins.contains(plugin)) {
-            PluginLoader loader = new PluginLoader();
+            ClassLoader loader = IPlugin.class.getClassLoader();
             try {
-                Class cl = loader.findClass(pack + plugin);
-                Object object = cl.getDeclaredConstructor().newInstance();
+                Class myClass = loader.loadClass(pack + plugin);
+                Object object = myClass.getDeclaredConstructor().newInstance();
                 mountedPlugins.add((IPlugin) object);
             } catch (Exception e) {
-                System.out.println("ERROR: " + e.getMessage());
+                e.printStackTrace();
             }
         } else {
-            System.out.println("Plugin not found!");
+            throw new IllegalStateException("Plugin not found!");
         }
     }
 
