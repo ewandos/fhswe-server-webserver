@@ -21,9 +21,9 @@ public class DynamicPlugin implements IPlugin {
     @Override
     public float canHandle(IRequest req) {
         // create regexp pattern
-        String pattern ="(\\/"+ identifier + "\\/.*)|(\\/.*\\?" + identifier + "Plugin=true)";
-        Pattern REGEXP = Pattern.compile(pattern, Pattern.MULTILINE);
-
+        String pattern ="(\\/"+ identifier + ".*)|(.*\\?" + identifier + "Plugin=true)";
+        Pattern REGEXP = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE);
+        System.out.println(identifier + "'s pattern doesnt match");
         // get requestedPlugin
         String requestedPath = req.getUrl().getRawUrl();
         Matcher regexp = REGEXP.matcher(requestedPath);
