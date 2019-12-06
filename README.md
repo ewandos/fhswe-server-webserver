@@ -45,6 +45,12 @@ Aus dieser kurzen Angabe ergeben sich folgende konkreten Aufgabenstellungen:
   * XPath: ```//node|way/tag[@k, @v]```
   * Während dieser Aufbereitung darf das Plugin keine anderen Abfragen annehmen dürfen. Es muss stattdessen eine Warnmeldung ausgeben.
   
+**ToLower**
+* In einer textarea kann beliebig langer Text eingegeben werden.
+* Ein Submit-Button sendet den Text mittels POST Request an den Server
+* Am Server wird der Text in Kleinbuchstaben kovertiert.
+* Das Ergebnis wird ein einem PRE-Tag unterhalb der textarea dargestellt.
+  
 ## Zusätzliche Informationen
 
 **20 Unit Tests**
