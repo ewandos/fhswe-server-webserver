@@ -20,7 +20,7 @@ public class StaticPlugin implements IPlugin {
     public float canHandle(IRequest req) {
         // if it can find the file to the requested path, it returns a 0.5, otherwise a 0.0
         String tempFile = req.getUrl().getPath().substring(1);
-        String tempPath = directory + requestedFile;
+        String tempPath = directory + tempFile;
 
         System.out.println("searched path: ./" + directory + tempFile);
 

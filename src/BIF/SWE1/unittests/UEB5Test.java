@@ -222,7 +222,7 @@ public class UEB5Test extends AbstractTestFixture<UEB5> {
 	private final static String static_file_content = "Hello World!";
 
 	private void setupStaticFilePlugin(UEB5 ueb, String fileName) throws FileNotFoundException {
-		final File folder = new File("tmp-static-files");
+		final File folder = new File("statics/tmp-static-files");
 
 		if (!folder.exists()) {
 			folder.mkdirs();
