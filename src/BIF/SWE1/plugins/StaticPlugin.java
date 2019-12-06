@@ -84,6 +84,9 @@ public class StaticPlugin implements IPlugin {
             case ".js":
                 response = ResponseFactory.create( "text/javascript", content);
                 break;
+            case ".ico":
+                response = ResponseFactory.create( "image/x-icon", content);
+                break;
             default:
                 response = ResponseFactory.create("text/plain", content);
                 break;

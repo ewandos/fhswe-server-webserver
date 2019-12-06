@@ -9,12 +9,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * "DynamicPlugin" is a base-class for all dynamic plugins that print don't return static files.
+ * "DynamicPlugin" is a abstract-class for all dynamic plugins that print don't return static files.
  * Most dynamic plugins process data of a database and return them to the client.
  * This class is used as base-class because the method "canHandle()" stays always the same and would be
  * redundant if implemented in every plugin.
  */
-public class DynamicPlugin implements IPlugin {
+public abstract class DynamicPlugin implements IPlugin {
     /** The name of the plugin. The plugin will be accessible by this name.*/
     protected String identifier = "dynamic";
 
@@ -23,7 +23,6 @@ public class DynamicPlugin implements IPlugin {
         // create regexp pattern
         String pattern ="(\\/"+ identifier + ".*)|(.*\\?" + identifier + "Plugin=true)";
         Pattern REGEXP = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE);
-        System.out.println(identifier + "'s pattern doesnt match");
         // get requestedPlugin
         String requestedPath = req.getUrl().getRawUrl();
         Matcher regexp = REGEXP.matcher(requestedPath);
