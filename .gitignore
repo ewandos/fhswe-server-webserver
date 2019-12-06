@@ -60,6 +60,7 @@ META-INF/MANIFEST.MF
 plugins/test_plugin.class
 
 #Test Files
+statics/tmp-static-files/
 tmp-static-files/
 
 #Private Files
