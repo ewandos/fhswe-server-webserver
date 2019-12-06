@@ -1,17 +1,17 @@
 package BIF.SWE1.plugins;
 
-import BIF.SWE1.interfaces.IPlugin;
+import BIF.SWE1.httpUtils.ResponseFactory;
 import BIF.SWE1.interfaces.IRequest;
 import BIF.SWE1.interfaces.IResponse;
+import BIF.SWE1.pluginSystem.DynamicPlugin;
 
-public class TemperaturePlugin implements IPlugin {
-    @Override
-    public float canHandle(IRequest req) {
-        return 0;
+public class TemperaturePlugin extends DynamicPlugin {
+    public TemperaturePlugin() {
+        identifier = "Temperature";
     }
 
     @Override
     public IResponse handle(IRequest req) {
-        return null;
+        return ResponseFactory.create("text/html", identifier + " works!");
     }
 }
