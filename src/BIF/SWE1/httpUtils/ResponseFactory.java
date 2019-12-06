@@ -32,6 +32,7 @@ public class ResponseFactory {
      */
     public static Response create(String contentType, String content) {
         Response response = new Response();
+        response.setStatusCode(200);
         response.setContent(content);
         response.setContentType(contentType);
         return response;
