@@ -27,6 +27,7 @@ public class PluginManager implements IPluginManager {
         add("NaviPlugin");
         add("StaticPlugin");
         add("TemperaturePlugin");
+        add("ToLowerPlugin");
     }
 
     private List<String> gatherPlugins() {
@@ -91,7 +92,7 @@ public class PluginManager implements IPluginManager {
                 e.printStackTrace();
             }
         } else {
-            throw new IllegalStateException("Plugin not found!");
+            throw new IllegalStateException(plugin + " not found!");
         }
     }
 
