@@ -24,7 +24,7 @@ public class Request implements IRequest {
     private int headersCount;
     private String content;
 
-    private final String pattern = "^(GET|POST|get|post)\\s/((http(s)?://)?(www\\.)?/?[a-zA-Z0-9/_]+\\.[a-z]+\\??([a-zA-Z0-9/_]+=[a-zA-Z0-9]+&?)*)?\\sHTTP/(1\\.0|1\\.1|2)$";
+    private final String pattern = "^(GET|POST|get|post)\\s/((http(s)?://)?(www\\.)?/?[a-zA-Z0-9/_\\-]+\\.[a-z]+\\??([a-zA-Z0-9/_]+=[a-zA-Z0-9]+&?)*)?\\sHTTP/(1\\.0|1\\.1|2)$";
     private final Pattern REGEXP = Pattern.compile(pattern, Pattern.MULTILINE);
 
     public Request(InputStream stream) {

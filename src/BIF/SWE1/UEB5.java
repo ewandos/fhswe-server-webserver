@@ -4,7 +4,6 @@ import java.io.InputStream;
 
 import BIF.SWE1.httpUtils.Request;
 import BIF.SWE1.interfaces.IPlugin;
-import BIF.SWE1.interfaces.IPluginManager;
 import BIF.SWE1.interfaces.IRequest;
 import BIF.SWE1.pluginSystem.PluginManager;
 import BIF.SWE1.plugins.StaticPlugin;
@@ -28,10 +27,9 @@ public class UEB5 {
 	}
 
 	public void setStatiFileFolder(String s) {
-
 	}
 
 	public String getStaticFileUrl(String s) {
-		return null;
+		return "statics/tmp-static-files/" + s;
 	}
 }
