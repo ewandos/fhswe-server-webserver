@@ -14,9 +14,13 @@ public class ToLowerPlugin extends DynamicPlugin {
 
     @Override
     public IResponse handle(IRequest req) {
-        Map<String, String> headers = req.getHeaders();
-        System.out.println(headers);
+        String postData = req.getContentString();
 
-        return ResponseFactory.create("text/html", identifier + " works!");
+        if (postData.isEmpty())
+            postData = "undefined";
+
+        String string = postData.substring(postData.indexOf("=") + 1);
+
+        return ResponseFactory.create("text/html", identifier + " works: " + string.toLowerCase());
     }
 }

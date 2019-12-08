@@ -81,10 +81,10 @@ public class Request implements IRequest {
 
         if (getMethod().equalsIgnoreCase("post")) {
             StringBuilder cline = new StringBuilder();
-            int c = 0;
+            int i = 0;
 
-            while (reader.ready() && (c = reader.read()) != -1) {
-                cline.append(c);
+            while (reader.ready() && (i = reader.read()) != -1) {
+                cline.append((char) i);
             }
             builder = cline;
 
