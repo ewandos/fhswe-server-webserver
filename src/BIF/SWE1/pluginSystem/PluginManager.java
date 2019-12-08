@@ -23,6 +23,8 @@ public class PluginManager implements IPluginManager {
 
     public PluginManager() {
         namesOfStagedPlugins = gatherPlugins();
+
+        // adding all default Plugins one-by-one
         add("ErrorPlugin");
         add("NaviPlugin");
         add("StaticPlugin");
@@ -47,14 +49,14 @@ public class PluginManager implements IPluginManager {
 
     /**
      * Interates through the mounted plugins and evaluates which one can handle the HTTP-Request best.
+     *
      * @param request A HTTP-Request
      * @return Plugin that is best at handling the request.
      */
     public IPlugin getBestHandlePlugin(IRequest request) {
         float maxHandleValue = 0.0f;
         IPlugin suitablePlugin = null;
-        for(IPlugin plugin : mountedPlugins)
-        {
+        for (IPlugin plugin : mountedPlugins) {
             float handleValue = plugin.canHandle(request);
             if (handleValue > maxHandleValue) {
                 maxHandleValue = handleValue;
@@ -81,10 +83,10 @@ public class PluginManager implements IPluginManager {
     @Override
     public void add(String plugin) {
         // check if searched plugin is available
-        // TODO: currently case-sensitive
         if (namesOfStagedPlugins.contains(plugin)) {
             ClassLoader loader = IPlugin.class.getClassLoader();
             try {
+                // argument is the classpath to the requested plugin
                 Class myClass = loader.loadClass(pack + plugin);
                 Object object = myClass.getDeclaredConstructor().newInstance();
                 mountedPlugins.add((IPlugin) object);

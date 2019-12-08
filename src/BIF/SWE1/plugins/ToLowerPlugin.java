@@ -5,8 +5,6 @@ import BIF.SWE1.interfaces.IRequest;
 import BIF.SWE1.interfaces.IResponse;
 import BIF.SWE1.pluginSystem.DynamicPlugin;
 
-import java.util.Map;
-
 public class ToLowerPlugin extends DynamicPlugin {
     public ToLowerPlugin() {
         identifier = "ToLower";

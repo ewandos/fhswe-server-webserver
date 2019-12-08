@@ -5,6 +5,10 @@ import BIF.SWE1.interfaces.IPlugin;
 import BIF.SWE1.interfaces.IRequest;
 import BIF.SWE1.interfaces.IResponse;
 
+/**
+ * The Error plugin is responsible to return a 404 page if no other plugin can handle the request.
+ */
+
 public class ErrorPlugin implements IPlugin {
     @Override
     public float canHandle(IRequest req) {

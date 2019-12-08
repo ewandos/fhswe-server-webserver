@@ -9,17 +9,17 @@ import java.util.Map;
 
 public class Response implements IResponse {
     private int statusCode;
-    private Map<String, String> headers = new HashMap<String, String>();
-    private StringBuilder content = new StringBuilder();
+    private Map<String, String> headers = new HashMap<>();
     private ByteArrayOutputStream contentBytes = new ByteArrayOutputStream();
     private String contentType = "text/plain";
     private String serverHeader = "BIF-BIF.SWE1-Server";
 
     /**
      * Takes the response line, general headers, custom headers and content and concat them
+     * The Response-Class works with ByteArrays, to ensure that no data is lost
      * @return Entire httpResponse, ready for sending
      */
-    private byte[] buildResponse(){
+    private byte[] buildResponse() {
         // append general headers to string
         StringBuilder head = new StringBuilder();
         head.append("HTTP/1.1 ").append(getStatus()).append("\r\n");
@@ -32,7 +32,7 @@ public class Response implements IResponse {
             head.append(entry.getKey()).append(": ").append(entry.getValue()).append("\r\n");
         head.append("\r\n");
 
-        //
+        // append head- and content OutputStreams
         ByteArrayOutputStream httpResponseBytes = new ByteArrayOutputStream();
         try {
             httpResponseBytes.write(head.toString().getBytes(StandardCharsets.UTF_8));
@@ -51,7 +51,6 @@ public class Response implements IResponse {
 
     @Override
     public int getContentLength() {
-        //return content.toString().getBytes(StandardCharsets.UTF_8).length;
         return contentBytes.size();
     }
 
@@ -69,7 +68,7 @@ public class Response implements IResponse {
     public int getStatusCode() {
         if (statusCode == 0)
             throw new IllegalStateException("Status code is not set!");
-         else
+        else
             return statusCode;
     }
 
@@ -114,7 +113,6 @@ public class Response implements IResponse {
             contentBytes.write(bytes);
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            this.content.append(content);
         }
     }
 
@@ -141,11 +139,12 @@ public class Response implements IResponse {
         if (this.getContentType() != null && this.getContentLength() <= 0)
             throw new IllegalStateException("Trying to send response without content while content type set!");
 
-         byte[] httpResponseBytes = buildResponse();
+        // get content as ByteArray
+        byte[] httpResponseBytes = buildResponse();
         try {
             network.write(httpResponseBytes);
             network.flush();
-        } catch(Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }

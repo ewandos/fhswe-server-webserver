@@ -1,6 +1,5 @@
 package BIF.SWE1.plugins;
 
-import BIF.SWE1.httpUtils.Response;
 import BIF.SWE1.httpUtils.ResponseFactory;
 import BIF.SWE1.interfaces.IPlugin;
 import BIF.SWE1.interfaces.IRequest;
@@ -18,14 +17,13 @@ public class StaticPlugin implements IPlugin {
 
     @Override
     public float canHandle(IRequest req) {
-        // if it can find the file to the requested path, it returns a 0.5, otherwise a 0.0
         String tempFile = req.getUrl().getPath().substring(1);
         String tempPath = directory + tempFile;
 
-        System.out.println("searched path: ./" + directory + tempFile);
-
         File file = new File(tempPath);
-        if(file.isFile() || tempFile.isEmpty()) {
+
+        // if it can find the file to the requested path, it returns a 0.5, otherwise a 0.0
+        if (file.isFile() || tempFile.isEmpty()) {
             requestedFile = tempFile;
             requestedPath = tempPath;
             return 0.5f;
@@ -42,8 +40,17 @@ public class StaticPlugin implements IPlugin {
         else
             requestedPath = directory + requestedFile;
 
+        // the response is the content of the requested file
+        String content = getContent();
+        String fileType = requestedPath.substring(requestedPath.lastIndexOf("."));
+
+        // ResponseFactory also handles fileTypes
+        return ResponseFactory.create(fileType, content);
+    }
+
+    private String getContent() {
         // reference one line at a time
-        String line = null;
+        String line;
         StringBuilder builder = new StringBuilder();
 
         try {
@@ -53,44 +60,18 @@ public class StaticPlugin implements IPlugin {
             // Always wrap FileReader in BufferedReader.
             BufferedReader bufferedReader = new BufferedReader(fileReader);
 
-            while((line = bufferedReader.readLine()) != null) {
+            while ((line = bufferedReader.readLine()) != null) {
                 builder.append(line);
             }
 
             bufferedReader.close();
-        }
-        catch(FileNotFoundException ex) {
+        } catch (FileNotFoundException ex) {
             System.out.println("Unable to open file '" + requestedPath + "'");
 
-        }
-        catch(IOException ex) {
+        } catch (IOException ex) {
             System.out.println("Error reading file '" + requestedPath + "'");
         }
 
-
-        // the response is the content of the requested file
-        Response response = null;
-        String content = builder.toString();
-        String fileType = requestedPath.substring(requestedPath.lastIndexOf("."));
-
-
-        switch(fileType) {
-            case ".html":
-                response = ResponseFactory.create( "text/html", content);
-                break;
-            case ".css":
-                response = ResponseFactory.create( "text/css", content);
-                break;
-            case ".js":
-                response = ResponseFactory.create( "text/javascript", content);
-                break;
-            case ".ico":
-                response = ResponseFactory.create( "image/x-icon", content);
-                break;
-            default:
-                response = ResponseFactory.create("text/plain", content);
-                break;
-        }
-        return response;
+        return builder.toString();
     }
 }
