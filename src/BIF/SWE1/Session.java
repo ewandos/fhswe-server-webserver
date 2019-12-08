@@ -28,26 +28,25 @@ public class Session implements Runnable{
         try{
             // create new PluginManager to mount every plugin
             PluginManager plManager = new PluginManager();
-            System.out.println("LOG: plugins ready");
+            System.out.println("LOG " + this.hashCode() + ": plugins ready");
 
             // get HTTP-Request by InputStream of the clientSocket
             Request request = new Request(clientSocket.getInputStream());
             request.isValid();
-            System.out.println("LOG: received valid request");
+            System.out.println("LOG " + this.hashCode() + ": received valid request");
 
             // iterate through mountedPlugins and validate which can handle the response
             IPlugin plugin = plManager.getBestHandlePlugin(request);
-            System.out.println("LOG: working plugin: " + plugin);
+            System.out.println("LOG " + this.hashCode() + ": working plugin: " + plugin);
 
             if(plugin != null) {
                 // get response-string of IPlugin and send it
                 plugin.handle(request).send(clientSocket.getOutputStream());
-                System.out.println("LOG: response send");
+                System.out.println("LOG " + this.hashCode() + ": response send");
             }
 
             clientSocket.close();
-            System.out.println("LOG: close socket");
-            System.out.println("------------------");
+            System.out.println("LOG " + this.hashCode() + ": close socket");
         } catch(Exception e) {
             System.out.println(e.getMessage());
         }
