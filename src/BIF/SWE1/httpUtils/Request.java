@@ -3,10 +3,7 @@ package BIF.SWE1.httpUtils;
 import BIF.SWE1.interfaces.IRequest;
 import BIF.SWE1.interfaces.IUrl;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
@@ -76,13 +73,30 @@ public class Request implements IRequest {
         StringBuilder builder = new StringBuilder();
         String line = "";
 
-        // checks if something is ready to be read (works with nextChar and nChars fields)
-        if (reader.ready())
-            line = reader.readLine();
+        /*
+        * POST-Requests terminate their body without a "\n".
+        * POST-Requests need to be read by char.
+        * GET-Requests can be read by line
+         */
 
-        while(line != null && !line.equals("")) {
-            builder.append(line);
-            line = reader.readLine();
+        if (getMethod().equalsIgnoreCase("post")) {
+            StringBuilder cline = new StringBuilder();
+            int c = 0;
+
+            while (reader.ready() && (c = reader.read()) != -1) {
+                cline.append(c);
+            }
+            builder = cline;
+
+        } else if(getMethod().equalsIgnoreCase("get")) {
+            // checks if something is ready to be read (works with nextChar and nChars fields)
+            if (reader.ready())
+                line = reader.readLine();
+
+            while(line != null && !line.equals("")) {
+                builder.append(line);
+                line = reader.readLine();
+            }
         }
 
         content = builder.toString();
