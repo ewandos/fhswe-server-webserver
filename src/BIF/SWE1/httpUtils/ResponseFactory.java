@@ -22,7 +22,7 @@ public class ResponseFactory {
                 response.setContentType("text/css");
                 break;
             case ".js":
-                response.setContentType("text/javascript");
+                response.setContentType("application/javascript");
                 break;
             case ".ico":
                 response.setContentType("image/x-icon");
@@ -38,6 +38,12 @@ public class ResponseFactory {
         return response;
     }
 
+    public static Response create(int statusCode, String contentType, String content) {
+        Response response = ResponseFactory.create(contentType, content);
+        response.setStatusCode(statusCode);
+        return response;
+    }
+
     /**
      * @param statusCode  Http Response-Code
      * @param server      Name of the Server
@@ -46,8 +52,7 @@ public class ResponseFactory {
      * @return HttpResponse-Object
      */
     public static Response create(int statusCode, String server, String contentType, String content) {
-        Response response = ResponseFactory.create(contentType, content);
-        response.setStatusCode(statusCode);
+        Response response = ResponseFactory.create(statusCode, contentType, content);
         response.setServerHeader(server);
         return response;
     }

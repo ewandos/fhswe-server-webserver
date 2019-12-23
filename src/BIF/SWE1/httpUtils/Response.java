@@ -82,6 +82,8 @@ public class Response implements IResponse {
         switch (statusCode) {
             case 200:
                 return "200 OK";
+            case 302:
+                return "302 REDIRECT";
             case 404:
                 return "404 Not Found";
             case 500:
