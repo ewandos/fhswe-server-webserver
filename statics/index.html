@@ -1,46 +1,58 @@
 <!doctype html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Philip Ewert">
-    <meta name="theme-color" content="#563d7c">
-    <title>SWE-Webserver</title>
+    <head>
+        <!-- META -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="Mark Otto, Jacob Thornton, and Philip Ewert">
+        <meta name="theme-color" content="#563d7c">
+        <title>SWE-Webserver</title>
 
-    <!-- CSS -->
-    <link href="css/bootstrap.css" rel="stylesheet">
-    <link href="css/styles.css" rel="stylesheet">
-</head>
-<body class="text-center">
-<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-    <header class="masthead mb-auto">
-        <div class="inner">
-            <h3 class="masthead-brand">SWE-Webserver</h3>
-            <nav class="nav nav-masthead justify-content-center">
-                <a class="nav-link active" href="#">Home</a>
-                <a class="nav-link" href="#">Features</a>
-                <a class="nav-link" href="#">Contact</a>
-            </nav>
+        <!-- CSS -->
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <link href="css/styles.css" rel="stylesheet">
+
+    </head>
+    <body class="text-center">
+        <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+
+            <!-- H E A D E R -->
+            <header class="masthead mb-auto">
+                <div class="inner">
+                    <h3 class="masthead-brand">SWE-Webserver</h3>
+                    <nav class="nav nav-masthead justify-content-center">
+                        <a class="nav-link active" href="#">Home</a>
+                        <a class="nav-link" href="#">Features</a>
+                        <a class="nav-link" href="#">Contact</a>
+                    </nav>
+                </div>
+            </header>
+
+            <!-- M A I N -->
+            <main role="main" class="inner cover">
+                <h1>Welcome to my selfmade <strong>Webserver</strong> <br>powered by strong Java beans.</h1>
+                <br><br>
+
+                <!-- To Lower -->
+                <h4>ToLower</h4>
+                <label for="toLowerInput"></label>
+                <input type="text" name="toLowerInput" id="toLowerInput">
+                <button type="button" onclick="toLowerRequest()">Change Content</button>
+                <br>
+                <pre id="toLowerOutput"> </pre>
+            </main>
+
+            <!-- F O O T E R -->
+            <footer class="mastfoot mt-auto">
+                <div class="inner">
+                    <p>Design Template powered by <a href="https://getbootstrap.com/">Bootstrap</a>, designed by <a href="http://twitter.com/mdo">@mdo</a>.</p>
+                    <p>Backend Webserver for <a href="https://technikum-wien.at/">FH Technikum Wien</a>, by <a href="https://twitter.com/ewandos1">@ewandos1</a>.</p>
+                </div>
+            </footer>
         </div>
-    </header>
 
-    <main role="main" class="inner cover">
-        <h1>Welcome to my selfmade <strong>Webserver</strong> <br>powered by strong Java Beans.</h1>
-        <br><br>
-        <h4>ToLower</h4>
-        <form action="/ToLower" method="post">
-            Text: <input type="text" name="lower"><br>
-            <input type="submit" value="Submit">
-        </form>
-    </main>
-
-    <footer class="mastfoot mt-auto">
-        <div class="inner">
-            <p>Design Template powered by <a href="https://getbootstrap.com/">Bootstrap</a>, designed by <a href="http://twitter.com/mdo">@mdo</a>.</p>
-            <p>Backend Webserver for <a href="https://technikum-wien.at/">FH Technikum Wien</a>, by <a href="https://twitter.com/ewandos1">@ewandos1</a>.</p>
-        </div>
-    </footer>
-</div>
-</body>
+        <!-- Javascript -->
+        <script src="js/requestScripts.js"></script>
+    </body>
 </html>

@@ -24,6 +24,10 @@ a:hover {
     color: #fff;
 }
 
+pre {
+    color: #fff;
+}
+
 /* Custom default button */
 .btn-secondary,
 .btn-secondary:hover,
