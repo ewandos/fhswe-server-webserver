@@ -61,7 +61,7 @@ public class StaticPlugin implements IPlugin {
             BufferedReader bufferedReader = new BufferedReader(fileReader);
 
             while ((line = bufferedReader.readLine()) != null) {
-                builder.append(line);
+                builder.append(line).append("\n");
             }
 
             bufferedReader.close();
