@@ -6,6 +6,9 @@ import BIF.SWE1.interfaces.IRequest;
 import BIF.SWE1.interfaces.IResponse;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * "StaticPlugin" is a full-functional, low priority plugin for loading static files.
@@ -41,37 +44,20 @@ public class StaticPlugin implements IPlugin {
             requestedPath = directory + requestedFile;
 
         // the response is the content of the requested file
-        String content = getContent();
+        byte[] content = getContent();
         String fileType = requestedPath.substring(requestedPath.lastIndexOf("."));
 
         // ResponseFactory also handles fileTypes
         return ResponseFactory.create(fileType, content);
     }
 
-    private String getContent() {
-        // reference one line at a time
-        String line;
-        StringBuilder builder = new StringBuilder();
-
+    private byte[] getContent() {
         try {
-            // FileReader reads text files in the default encoding.
-            FileReader fileReader = new FileReader(requestedPath);
-
-            // Always wrap FileReader in BufferedReader.
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-
-            while ((line = bufferedReader.readLine()) != null) {
-                builder.append(line).append("\n");
-            }
-
-            bufferedReader.close();
-        } catch (FileNotFoundException ex) {
-            System.out.println("Unable to open file '" + requestedPath + "'");
-
-        } catch (IOException ex) {
-            System.out.println("Error reading file '" + requestedPath + "'");
+            Path fileLocation = Paths.get(requestedPath);
+            return Files.readAllBytes(fileLocation);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
-
-        return builder.toString();
+        return new byte[0];
     }
 }
