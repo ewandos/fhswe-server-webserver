@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/DataGenerator/DataGenerator.iml" filepath="$PROJECT_DIR$/DataGenerator/DataGenerator.iml" />
       <module fileurl="file://$PROJECT_DIR$/swe-webserver.iml" filepath="$PROJECT_DIR$/swe-webserver.iml" />
     </modules>
   </component>
