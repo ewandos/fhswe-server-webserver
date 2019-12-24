@@ -12,6 +12,7 @@ public class TemperaturePlugin extends DynamicPlugin {
 
     @Override
     public IResponse handle(IRequest req) {
+        new Thread(new Sensor()).start();
         return ResponseFactory.create("text/html", identifier + " works!");
     }
 }
