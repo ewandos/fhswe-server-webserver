@@ -23,7 +23,7 @@ public class Simulator {
         calendar.set(2019, Calendar.DECEMBER, 31);
 
         // until 10.000 values are simulated
-        while (count < 10) {
+        while (count < 10050) {
             count++;
             // get random value for alternating the mid-value
             double rand = Math.random() * 2f - 1f;

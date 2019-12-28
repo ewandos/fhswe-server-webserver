@@ -55,6 +55,7 @@ public class Main {
                 // read all entries of the file
                 while ((query = br.readLine()) != null) {
                     // execute query into database
+                    System.out.println(query);
                     database.insert(query);
                 }
             }
