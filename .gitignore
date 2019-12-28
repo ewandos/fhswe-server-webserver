@@ -65,3 +65,4 @@ tmp-static-files/
 
 #Private Files
 timeRecording.md
+DataGenerator/src/GENERATOR/queries.txt
