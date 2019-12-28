@@ -31,49 +31,50 @@ getting more and less by time.
 - x-- % 365 is needed to ensure that the value is never greater than 1
 */
 
+import java.io.*;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class Main {
     public static void main(String[] args) {
-        // 10.000 values need to be simulated
-        double x = 10000;
 
-        // the temperature should alternate between x * 2 and x * 4
-        double alt = 3.5f; // 7 and 14
+        try {
+            // simulate 10.000 temperature entries as proper SQL INSERT statements
+            Simulator.run();
 
-        // set calendar to beginning of simulating the data
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(2019, Calendar.DECEMBER, 31);
+            // create a service object for the H2 Database
+            H2DBService database = new H2DBService();
 
-        // until 10.000 values are simulated
-        while (x > 0) {
-            // get random value for alternating the mid-value
-            double rand = Math.random() * 2f - 1f;
+            // load file that contains all queries
+            String file = "./DataGenerator/src/GENERATOR/queries.txt";
+            try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+                String query;
 
-            // get a mid value from a sin-wave that goes from -5 to 20
-            double mid = Math.cos(((x-- % 365f) / 365f) * 2 * Math.PI) * 12.5f + 7.5f + rand;
-
-            // the sin-wave matches with the 30th day of the year
-            double mid_fit = mid + (30f / 365f * 2 * Math.PI);
-
-            // get Min and Max Value by mul the mid-value
-            double min = mid_fit - (Math.random() * alt + alt);
-            double max = mid_fit + (Math.random() * alt + alt);
-
-            // subtract one day to go backwards in time
-            calendar.add(Calendar.DAY_OF_MONTH, - 1);
-
-            // print out values
-            System.out.println(calendar.getTime());
-            System.out.println("Min: " + min);
-            System.out.println("Max: " + max);
-
-            try {
-                Thread.sleep(500);
-            } catch(InterruptedException e) {
-                System.out.println(e.getCause());
+                // read all entries of the file
+                while ((query = br.readLine()) != null) {
+                    // execute query into database
+                    database.insert(query);
+                }
             }
+        } catch(SQLException e) {
+            System.out.println("SQL Error: " + e.getMessage());
+        } catch(FileNotFoundException e) {
+            System.out.println("File not found!");
+        } catch(IOException e) {
+            System.out.println(e.getMessage());
         }
 
+        /*
+        try {
+            generateValues();
+        } catch (IOException e) {
+            System.out.println("File not found!");
+        } catch (InterruptedException e) {
+            System.out.println("Sleep error");
+        }
+
+         */
     }
 }
