@@ -1,19 +1,19 @@
-package GENERATOR;
+package sensor.utils;
 
-public class TemperatureEntry {
+class TemperatureEntry {
     private int id;
     private String date;
     private double max;
     private double min;
 
-    public TemperatureEntry(int id, String date, double max, double min) {
+    TemperatureEntry(int id, String date, double max, double min) {
         this.id = id;
         this.date = date;
         this.max = max;
         this.min = min;
     }
 
-    public String createQuery() {
+    String createQuery() {
         StringBuilder builder = new StringBuilder();
         builder.append("INSERT INTO temperature (date, max, min) VALUES('");
         builder.append(date).append("', ");

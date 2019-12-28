@@ -1,4 +1,4 @@
-package GENERATOR;
+package sensor.utils;
 
 import java.sql.*;
 
@@ -19,10 +19,9 @@ import java.sql.*;
  */
 
 class H2DBService {
-    private String query;
     private Connection conn;
 
-    public H2DBService() throws SQLException {
+    H2DBService() throws SQLException {
         // connects to local embedded H2 Database using the included library from project settings
         this.conn = DriverManager.getConnection("jdbc:h2:./database/sensor", "","" );
     }
@@ -38,13 +37,13 @@ class H2DBService {
 
         StringBuilder builder = new StringBuilder();
 
-        ResultSetMetaData rsmd = rs.getMetaData();
-        int columnsNumber = rsmd.getColumnCount();
+        ResultSetMetaData rsMetaData = rs.getMetaData();
+        int columnsNumber = rsMetaData.getColumnCount();
         while (rs.next()) {
             for (int i = 1; i <= columnsNumber; i++) {
                 if (i > 1) System.out.print(",  ");
                 String columnValue = rs.getString(i);
-                builder.append(columnValue).append(" ").append(rsmd.getColumnName(i));
+                builder.append(columnValue).append(" ").append(rsMetaData.getColumnName(i));
             }
             builder.append("\n");
         }
