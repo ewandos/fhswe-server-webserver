@@ -15,11 +15,11 @@ public class Sensor implements Runnable {
     sin() * 5 is a range between +5 and -5 => a range of 10
     */
 
+    public Temperature temperature;
+
     @Override
     public void run() {
         try {
-            H2DBService database = new H2DBService();
-
             while (true) {
                 LocalDateTime date = LocalDateTime.now();
 
@@ -31,14 +31,13 @@ public class Sensor implements Runnable {
                 double rand = Math.random() * 0.5 - 0.5;
                 val = val * 10 + rand;
 
-                // System.out.println(val);
-                // System.out.println(date.toString());
-
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                 String formatDateTime = date.format(formatter);
 
-                Temperature temperature = new Temperature(val, (int) seconds, formatDateTime);
-                database.insert(temperature.createQuery());
+                // System.out.println(val + " : " + formatDateTime);
+
+                temperature = new Temperature(val, (int) seconds, formatDateTime);
+                H2DBService.insert(temperature.createQuery());
                 Thread.sleep(5000);
             }
 
@@ -48,4 +47,6 @@ public class Sensor implements Runnable {
             System.out.println(Arrays.toString(e.getStackTrace()));
         }
     }
+
+
 }

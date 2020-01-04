@@ -20,4 +20,8 @@ public class Temperature {
         return builder.toString();
     }
 
+    public double getValue() {
+        return temperature;
+    }
+
 }

@@ -19,22 +19,26 @@ import java.sql.*;
  */
 
 public class H2DBService {
-    private Connection conn;
+    private static Connection conn;
 
-    H2DBService() throws SQLException {
-        // connects to local embedded H2 Database using the included library from project settings
-        this.conn = DriverManager.getConnection("jdbc:h2:./database/sensor", "","" );
+    private static void establishConnection() throws SQLException {
+        if (conn == null) {
+            conn = DriverManager.getConnection("jdbc:h2:./database/sensor", "","" );
+        }
     }
 
-    public void insert(String query) throws SQLException {
+    public static void insert(String query) throws SQLException {
+        establishConnection();
         Statement stmt = conn.createStatement();
         stmt.executeUpdate(query);
     }
 
-    public String select(String query) throws SQLException {
+    public static String select(String query) throws SQLException {
+        establishConnection();
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery(query);
 
+        // TODO: Return a XML Object!
         StringBuilder builder = new StringBuilder();
 
         ResultSetMetaData rsMetaData = rs.getMetaData();
