@@ -18,6 +18,11 @@ public class StaticPlugin implements IPlugin {
     private String requestedFile = null;
     private String requestedPath = null;
 
+    /**
+     * Searches for the requested file. If it can be found 0.5f is returned, if not 0.0f is returned
+     * @param req Http Request
+     * @return 0.5f or 0.0f
+     */
     @Override
     public float canHandle(IRequest req) {
         String tempFile = req.getUrl().getPath().substring(1);
@@ -35,6 +40,11 @@ public class StaticPlugin implements IPlugin {
         }
     }
 
+    /**
+     * Returns the content of the requested file as an Http Response
+     * @param req Http Request
+     * @return Http Response containing the file data as content
+     */
     @Override
     public IResponse handle(IRequest req) {
         // if root-directory is requested load the index.html

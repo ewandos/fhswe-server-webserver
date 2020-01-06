@@ -7,6 +7,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Response serves as an Object for creating an OutputStream to send it to the client socket
+ */
 public class Response implements IResponse {
     private int statusCode;
     private Map<String, String> headers = new HashMap<>();
@@ -44,26 +47,47 @@ public class Response implements IResponse {
         return httpResponseBytes.toByteArray();
     }
 
+    /**
+     * @return Returns a writable map of the response headers. Never returns
+     *         null.
+     */
     @Override
     public Map<String, String> getHeaders() {
         return headers;
     }
 
+    /**
+     * @return Returns the content length or 0 if no content is set yet.
+     */
     @Override
     public int getContentLength() {
         return contentBytes.size();
     }
 
+    /**
+     * @return Gets the content type of the response.
+     */
     @Override
     public String getContentType() {
         return contentType;
     }
 
+    /**
+     * @param contentType
+     *            Sets the content type of the response.
+     * @throws IllegalStateException
+     *             A specialized implementation may throw a
+     *             InvalidOperationException when the content type is set by the
+     *             implementation.
+     */
     @Override
     public void setContentType(String contentType) {
         this.contentType = contentType;
     }
 
+    /**
+     * @return Gets the current status code. An Exceptions is thrown, if no status code was set.
+     */
     @Override
     public int getStatusCode() {
         if (statusCode == 0)
@@ -72,11 +96,17 @@ public class Response implements IResponse {
             return statusCode;
     }
 
+    /**
+     * @param statusCode Sets the current status code.
+     */
     @Override
     public void setStatusCode(int statusCode) {
         this.statusCode = statusCode;
     }
 
+    /**
+     * @return Returns the status code as string. (200 OK)
+     */
     @Override
     public String getStatus() {
         switch (statusCode) {
@@ -93,21 +123,37 @@ public class Response implements IResponse {
         }
     }
 
+    /**
+     * Adds or replaces a response header in the headers map
+     *
+     * @param header header string
+     * @param value value string
+     */
     @Override
     public void addHeader(String header, String value) {
         this.headers.put(header, value);
     }
 
+    /**
+     * @return Returns the Server response header. Defaults to "BIF-BIF.SWE1-Server".
+     */
     @Override
     public String getServerHeader() {
         return serverHeader;
     }
 
+    /**
+     * Sets the Server response header.
+     * @param server Server Label
+     */
     @Override
     public void setServerHeader(String server) {
         serverHeader = server;
     }
 
+    /**
+     * @param content Sets a string content. The content will be encoded in UTF-8.
+     */
     @Override
     public void setContent(String content) {
         try {
@@ -118,6 +164,9 @@ public class Response implements IResponse {
         }
     }
 
+    /**
+     * @param content Sets a byte[] as content.
+     */
     @Override
     public void setContent(byte[] content) {
         try {
@@ -127,6 +176,9 @@ public class Response implements IResponse {
         }
     }
 
+    /**
+     * @param stream Sets the stream as content.
+     */
     @Override
     public void setContent(InputStream stream) {
         try {
@@ -136,6 +188,9 @@ public class Response implements IResponse {
         }
     }
 
+    /**
+     * @param network Sends the response to the network stream.
+     */
     @Override
     public void send(OutputStream network) {
         if (this.getContentType() != null && this.getContentLength() <= 0)

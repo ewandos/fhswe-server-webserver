@@ -18,21 +18,39 @@ import java.sql.*;
     code and other way round.
  */
 
+/**
+ * Can be used to access the H2 Database that contains the temperature data of the sensor
+ */
 public class H2DBService {
     private static Connection conn;
 
     private static void establishConnection() throws SQLException {
+        /*
+        * there should be only one connection at any time
+        * cause the H2Database allows only one connection at any time
+         */
         if (conn == null) {
             conn = DriverManager.getConnection("jdbc:h2:./database/sensor", "","" );
         }
     }
 
+    /**
+     * Send a SQL INSERT query to the H2Database
+     * @param query insert query
+     * @throws SQLException Throws an SQLException
+     */
     public static void insert(String query) throws SQLException {
         establishConnection();
         Statement stmt = conn.createStatement();
         stmt.executeUpdate(query);
     }
 
+    /**
+     * Send a SQL SELECT query to the H2Databse
+     * @param query Insert Query
+     * @return Response from database as ResultSetMetaData
+     * @throws SQLException Throws an SQLException
+     */
     public static String select(String query) throws SQLException {
         establishConnection();
         Statement stmt = conn.createStatement();

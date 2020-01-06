@@ -5,6 +5,9 @@ import BIF.SWE1.interfaces.IUrl;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Serves as data container and parser of an URL
+ */
 public class Url implements IUrl {
     private String rawUrl;
     private String path;
@@ -28,11 +31,17 @@ public class Url implements IUrl {
         this.rawUrl = rawUrl;
     }
 
+    /**
+     * @return Returns the raw url.
+     */
     @Override
     public String getRawUrl() {
         return rawUrl;
     }
 
+    /**
+     * @return Returns the path of the url, without parameter.
+     */
     @Override
     public String getPath() {
         if (rawUrl != null && !pathGathered) {
@@ -49,6 +58,10 @@ public class Url implements IUrl {
         return path;
     }
 
+    /**
+     * @return Returns a dictionary with the parameter of the url. Never returns
+     *         null.
+     */
     @Override
     public Map<String, String> getParameter() {
         if (rawUrl != null && !parametersGathered && rawUrl.contains("?")) {
@@ -71,6 +84,9 @@ public class Url implements IUrl {
         return parametersMap;
     }
 
+    /**
+     * @return Returns the number of parameter of the url. Returns 0 if there are no parameter.
+     */
     @Override
     public int getParameterCount() {
         if (!parametersGathered)
@@ -78,6 +94,10 @@ public class Url implements IUrl {
         return numOfParameters;
     }
 
+    /**
+     * @return Returns the segments of the url path. A segment is divided by '/'
+     *         chars. Never returns null.
+     */
     @Override
     public String[] getSegments() {
         if (rawUrl != null && !segmentsGathered) {
@@ -90,16 +110,32 @@ public class Url implements IUrl {
         return segments;
     }
 
+    /**
+     * @return Returns the filename (with extension) of the url path. If the url
+     *         contains no filename, a empty string is returned. Never returns
+     *         null. A filename is present in the url, if the last segment
+     *         contains a name with at least one dot.
+     */
     @Override
     public String getFileName() {
         return null;
     }
 
+    /**
+     * @return Returns the extension of the url filename, including the leading
+     *         dot. If the url contains no filename, a empty string is returned.
+     *         Never returns null.
+     */
     @Override
     public String getExtension() {
         return null;
     }
 
+    /**
+     * @return Returns the url fragment. A fragment is the part after a '#' char
+     *         at the end of the url. If the url contains no fragment, a empty
+     *         string is returned. Never returns null.
+     */
     @Override
     public String getFragment() {
         if (rawUrl != null && !fragmentsGathered && rawUrl.contains("#")) {

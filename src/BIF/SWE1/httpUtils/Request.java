@@ -26,6 +26,10 @@ public class Request implements IRequest {
     private final String pattern = "^(GET|POST|get|post)\\s/?((http(s)?://)?(www\\.)?[a-zA-Z0-9/_\\-]+(\\.[a-z]+)*\\??([a-zA-Z0-9/_]+=[a-zA-Z0-9]+&?)*)?\\sHTTP/(1\\.0|1\\.1|2)$";
     private final Pattern REGEXP = Pattern.compile(pattern, Pattern.MULTILINE);
 
+    /**
+     * Creates a new Request Object and validates it instantly
+     * @param stream Inputstream of the client socket
+     */
     public Request(InputStream stream) {
         this.stream = new InputStreamReader(stream);
         try {
@@ -111,56 +115,96 @@ public class Request implements IRequest {
         content = builder.toString();
     }
 
+    /**
+     * @return Returns true if the request is valid. A request is valid, if
+     *         method and url could be parsed. A header is not necessary.
+     */
     @Override
     public boolean isValid() {
         return isValid;
     }
 
+    /**
+     * @return Returns the request method in UPPERCASE. get -> GET
+     */
     @Override
     public String getMethod() {
         return method.trim();
     }
 
+    /**
+     * @return Returns a URL object of the request. Never returns null.
+     */
     @Override
     public IUrl getUrl() {
         return url;
     }
 
+    /**
+     * @return Returns the request header. Never returns null. All keys must be
+     *         lower case.
+     */
     @Override
     public Map<String, String> getHeaders() {
         return headers;
     }
 
+    /**
+     * @return Returns the number of header or 0, if no header where found.
+     */
     @Override
     public int getHeaderCount() {
         return headersCount;
     }
 
+    /**
+     * @return Returns the user agent from the request header
+     */
     @Override
     public String getUserAgent() {
         return headers.getOrDefault("user-agent", null);
     }
 
+    /**
+     * @return Returns the parsed content length request header. Never returns
+     *         null.
+     */
     @Override
     public int getContentLength() {
         return content.length();
     }
 
+    /**
+     * @return Returns the parsed content type request header. Never returns
+     *         null.
+     */
     @Override
     public String getContentType() {
         return headers.getOrDefault("content-type", "text/plain");
     }
 
+    /**
+     * @return Returns the request content (body) stream or null if there is no
+     *         content stream.
+     */
     @Override
     public InputStream getContentStream() {
         return new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8));
     }
 
+    /**
+     * @return Returns the request content (body) as string or null if there is
+     *         no content.
+     */
     @Override
     public String getContentString() {
         return content;
     }
 
+    /**
+     * @return Returns the request content (body) as byte[] or null if there is
+     *         no content.
+     */
     @Override
     public byte[] getContentBytes() {
         return new ByteArrayInputStream(content.getBytes(StandardCharsets.UTF_8)).readAllBytes();

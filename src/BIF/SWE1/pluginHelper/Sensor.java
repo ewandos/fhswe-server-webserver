@@ -1,13 +1,14 @@
 package BIF.SWE1.pluginHelper;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
-import java.util.Date;
 
-import BIF.SWE1.pluginHelper.H2DBService;
-
+/**
+ * A single Runnable that simulates a temperature sensor.
+ * Every 5 seconds the Sensor sends the "current" temperature
+ * to a H2 Database
+ */
 public class Sensor implements Runnable {
     /*
     Temperature should be between 10 and 30 degree, based on time => range of 20
@@ -17,6 +18,11 @@ public class Sensor implements Runnable {
 
     public Temperature temperature;
 
+    /**
+     * Uses a sin() function to simulate the output data of a sensor that
+     * tracks the current temperature. Every 5 seconds a new temperature is send
+     * to the H2 Database by using a H2DBService
+     */
     @Override
     public void run() {
         try {

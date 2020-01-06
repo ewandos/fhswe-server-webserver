@@ -11,9 +11,16 @@ import BIF.SWE1.pluginSystem.DynamicPlugin;
 import java.sql.SQLException;
 import java.util.regex.Pattern;
 
+/**
+ * Is capable of running a simulated sensor that reads the current temperature
+ * and accessing a H2 Database that contains 10.000 temperature data sets
+ */
 public class TemperaturePlugin extends DynamicPlugin {
     private Sensor sensor;
 
+    /**
+     * Creates a new Temperature plugin and starts the sensor thread
+     */
     public TemperaturePlugin() {
         identifier = "Temperature";
         sensor = new Sensor();
@@ -26,6 +33,13 @@ public class TemperaturePlugin extends DynamicPlugin {
         th.start();
     }
 
+    /**
+     * If a REST Request is made the requested day is searched in the database, if a data set for that
+     * day exists, it will be returned. If only the plugin itself is called the current temperature
+     * will be returned
+     * @param req Http Request
+     * @return Http Response containing temperature data as content
+     */
     @Override
     public IResponse handle(IRequest req) {
         String restRequest = req.getUrl().getPath();

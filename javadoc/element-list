@@ -1,1 +1,5 @@
-BIF.SWE1
+BIF.SWE1.httpUtils
+BIF.SWE1.interfaces
+BIF.SWE1.pluginHelper
+BIF.SWE1.plugins
+BIF.SWE1.pluginSystem

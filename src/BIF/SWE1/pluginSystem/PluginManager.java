@@ -1,6 +1,5 @@
 package BIF.SWE1.pluginSystem;
 
-import BIF.SWE1.httpUtils.Response;
 import BIF.SWE1.interfaces.IPlugin;
 import BIF.SWE1.interfaces.IPluginManager;
 import BIF.SWE1.interfaces.IRequest;
@@ -9,7 +8,10 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.util.*;
 
-
+/**
+ * Is capable of loading plugin dynamically at runtime from class files.
+ * Holds the Plugins in a List to access them individually
+ */
 public class PluginManager implements IPluginManager {
     private List<IPlugin> mountedPlugins = new ArrayList<IPlugin>();
     private List<String> namesOfStagedPlugins;
@@ -21,6 +23,10 @@ public class PluginManager implements IPluginManager {
     private File directory = new File("src" + File.separatorChar + pack.replace('.', File.separatorChar));
     private FilenameFilter filter = (dir, name) -> name.endsWith(nameSuffix);
 
+    /**
+     * Creates a new PluginManager and
+     * mounts the Plugins Error, Navi, Static, Temperature and ToLower
+     */
     public PluginManager() {
         namesOfStagedPlugins = gatherPlugins();
 
@@ -66,20 +72,36 @@ public class PluginManager implements IPluginManager {
         return suitablePlugin;
     }
 
+    /**
+     * Get the current amount of Plugins that are mounted
+     * @return int
+     */
     public int getPluginCount() {
         return mountedPlugins.size();
     }
 
+    /**
+     * Returns a list of all plugins. Never returns null.
+     * @return List<IPlugin>
+     */
     @Override
     public List<IPlugin> getPlugins() {
         return mountedPlugins;
     }
 
+    /**
+     * Adds a new plugin. If the plugin was already added, nothing will happen.
+     * @param plugin Plugin
+     */
     @Override
     public void add(IPlugin plugin) {
         mountedPlugins.add(plugin);
     }
 
+    /**
+     * Adds a new plugin by class name. If the plugin was already added, nothing will happen.
+     * @param plugin Plugin
+     */
     @Override
     public void add(String plugin) {
         // check if searched plugin is available
@@ -98,6 +120,9 @@ public class PluginManager implements IPluginManager {
         }
     }
 
+    /**
+     * Clears all plugins
+     */
     @Override
     public void clear() {
         mountedPlugins.clear();
