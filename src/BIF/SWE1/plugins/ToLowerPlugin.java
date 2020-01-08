@@ -27,7 +27,7 @@ public class ToLowerPlugin extends DynamicPlugin {
         // in post requests the parameters can be found in the content of the request
         String postData = req.getContentString();
 
-        if (postData.isEmpty())
+        if (postData.isBlank())
             postData = "Error: The ToLower Plugin needs to be accessed by a Http-Post-Request!";
         else
             postData = postData.substring(postData.indexOf("=") + 1).toLowerCase();
