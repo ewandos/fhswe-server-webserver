@@ -51,26 +51,35 @@ public class H2DBService {
      * @return Response from database as ResultSetMetaData
      * @throws SQLException Throws an SQLException
      */
-    public static String select(String query) throws SQLException {
+    public static String select(String query, boolean asXML) throws SQLException {
         establishConnection();
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery(query);
 
-        // TODO: Return a XML Object!
-        StringBuilder builder = new StringBuilder();
+        if (!asXML) {
+            StringBuilder builder = new StringBuilder();
 
-        ResultSetMetaData rsMetaData = rs.getMetaData();
-        int columnsNumber = rsMetaData.getColumnCount();
-        while (rs.next()) {
-            for (int i = 1; i <= columnsNumber; i++) {
-                if (i > 1) System.out.print(",  ");
-                String columnValue = rs.getString(i);
-                builder.append(columnValue).append(" ").append(rsMetaData.getColumnName(i));
+            ResultSetMetaData rsMetaData = rs.getMetaData();
+            int columnsNumber = rsMetaData.getColumnCount();
+            while (rs.next()) {
+                for (int i = 1; i <= columnsNumber; i++) {
+                    if (i > 1) System.out.print(",  ");
+                    String columnValue = rs.getString(i);
+                    builder.append(columnValue).append(" ").append(rsMetaData.getColumnName(i));
+                }
+                builder.append("\n");
             }
-            builder.append("\n");
+
+            return builder.toString();
+        } else {
+            try {
+                return XMLBuilder.generateXML(rs);
+            } catch (Exception e) {
+                System.out.println(e.getStackTrace());
+            }
         }
 
-        return builder.toString();
+        return "No data found";
     }
 }
 
