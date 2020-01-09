@@ -42,8 +42,10 @@ public class Sensor implements Runnable {
 
                 // System.out.println(val + " : " + formatDateTime);
 
-                temperature = new Temperature(val, (int) seconds, formatDateTime);
-                H2DBService.insert(temperature.createQuery());
+                // temperature = new Temperature(val, (int) seconds, formatDateTime);
+
+                // TODO: Prepared!
+                H2DBService.insert(val, (int)seconds, formatDateTime);
                 Thread.sleep(5000);
             }
 

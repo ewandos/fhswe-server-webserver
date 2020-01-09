@@ -36,25 +36,33 @@ public class H2DBService {
 
     /**
      * Send a SQL INSERT query to the H2Database
-     * @param query insert query
+     * @param temperature insert query
      * @throws SQLException Throws an SQLException
      */
-    public static void insert(String query) throws SQLException {
+    public static void insert(double temperature, int seconds, String date) throws SQLException {
         establishConnection();
-        Statement stmt = conn.createStatement();
-        stmt.executeUpdate(query);
+        // TODO: Prepared!
+        PreparedStatement stmt = conn.prepareStatement("insert into SENSORDATA (TEMPERATURE, SECONDS, DATE) VALUES(?,?,?)");
+        stmt.setDouble(1, temperature);
+        stmt.setInt(2, seconds);
+        stmt.setString(3, date);
+        stmt.executeUpdate();
     }
 
     /**
      * Send a SQL SELECT query to the H2Databse
-     * @param query Insert Query
+     * @param date Insert Query
      * @return Response from database as ResultSetMetaData
      * @throws SQLException Throws an SQLException
      */
-    public static String select(String query, boolean asXML) throws SQLException {
+    public static String select(String date, boolean asXML) throws SQLException {
         establishConnection();
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery(query);
+
+        // TODO: Prepared!
+        PreparedStatement stmt = conn.prepareStatement("select * from TEMPERATURE where DATE = ?");
+        stmt.setString(1, date);
+
+        ResultSet rs = stmt.executeQuery();
 
         if (!asXML) {
             StringBuilder builder = new StringBuilder();

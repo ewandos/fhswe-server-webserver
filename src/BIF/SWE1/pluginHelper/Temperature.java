@@ -18,13 +18,15 @@ public class Temperature {
     public Temperature (double temperature, int seconds, String date) {
         this.temperature = temperature;
         this.seconds = seconds;
+        this.date = date;
 
+        /*
         if (date.contains("-") && date.length() == 10) {
             this.date = date;
         } else {
             throw new IllegalStateException("Date not properly formatted!");
         }
-
+        */
     }
 
     /**

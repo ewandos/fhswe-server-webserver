@@ -8,6 +8,7 @@ import BIF.SWE1.pluginHelper.H2DBService;
 import BIF.SWE1.pluginHelper.Sensor;
 import BIF.SWE1.pluginSystem.DynamicPlugin;
 
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.regex.Pattern;
 
@@ -54,11 +55,13 @@ public class TemperaturePlugin extends DynamicPlugin {
                 // Get date of REST request and format it to "YYYY-MM-DD"
                 String date = restRequest.substring(identifier.length() + 5).replace('/', '-');
 
+                //TODO: Prepared Statements
+
                 // create SQL Query and execute it on database
-                String responseText = H2DBService.select("select * from TEMPERATURE where DATE = '" + date + "';", true);
+                String responseText = H2DBService.select(date, true);
 
                 // return returned data from database
-                response = ResponseFactory.create("text/plain", responseText);
+                response = ResponseFactory.create("text/xml", responseText);
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }
